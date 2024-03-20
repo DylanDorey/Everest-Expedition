@@ -22,10 +22,6 @@ public class PlayerController : MonoBehaviour
     public PlayerInput playerInput;
 
     public float playerSpeed = 5f;
-
-    private Vector2 moveInput;
-
-    public Rigidbody rb;
     private void Awake()
     {
         //reference for the PlayerInput scriptable object
@@ -38,8 +34,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //reads the Vector2 value from the playerActions components and from the move action (AD) in our actions scriptable object
-        //Vector2 moveVec = playerInput.Player.Move.ReadValue<Vector2>();
-        //transform.Translate(new Vector3(moveVec.x, 0f, 0f) * playerSpeed * Time.deltaTime);
+        Vector2 moveVec = playerInput.Player.Move.ReadValue<Vector2>();
+        transform.Translate(new Vector3(0f, 0f, moveVec.y) * playerSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -51,20 +47,12 @@ public class PlayerController : MonoBehaviour
     /// allows the player to rotate when an input action is detected from the action map
     /// </summary>
 
-    public void Motion()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.velocity = Vector3.forward * playerSpeed;
-    }
-
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
-        rb.velocity = moveInput * playerSpeed;
 
         //On move is only going to fire when the event is called. It doesn't continualy get called when held
-        //Vector2 moveVec = context.ReadValue<Vector2>();
-        //transform.Translate(new Vector3(moveVec.x, 0f, 0f) * playerSpeed * Time.deltaTime);
+        Vector2 moveVec = context.ReadValue<Vector2>();
+        transform.Translate(new Vector3(0f, 0f, moveVec.y) * playerSpeed * Time.deltaTime);
     }
 
     public void OnInventorySelect()
