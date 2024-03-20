@@ -58,12 +58,4 @@ public class PlayerController : MonoBehaviour
     {
         //UseItemInSlot();
     }
-
-    /// <summary>
-    /// Picks up item
-    /// </summary>
-    public void PickupItem(GameObject item)
-    {
-        
-    }
 }

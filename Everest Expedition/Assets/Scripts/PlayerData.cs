@@ -14,6 +14,8 @@ public class PlayerData : MonoBehaviour
     private static PlayerData _instance;
     public static PlayerData Instance { get { return _instance; } }
 
+    public bool unlimitedThirst = false;
+
     //int for the player score, floats for player health and player thirst values
     public int playerScore;
     public float playerHealth;
@@ -34,6 +36,14 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        while (unlimitedThirst)
+        {
+            playerThirst = 100f;
+        }
+    }
+
     /// <summary>
     /// Resets all of the players data values to their default state
     /// </summary>
@@ -43,5 +53,17 @@ public class PlayerData : MonoBehaviour
         playerScore = 0;
         playerHealth = 100;
         playerThirst = 100;
+    }
+
+    public IEnumerator UnlimitedThirst(float unlimitedDuration)
+    {
+        for (int index = 0; index < 1; index++)
+        {
+            unlimitedThirst = true;
+
+            yield return new WaitForSeconds(unlimitedDuration);
+        }
+
+        unlimitedThirst = false;
     }
 }

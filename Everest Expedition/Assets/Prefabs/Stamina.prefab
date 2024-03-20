@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28bd3e70c592517469cb2358ccc43726, type: 2}
+  - {fileID: 2100000, guid: a35c95421d8233e4abd8521a3aa4ab42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,10 +93,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7739175473511107642}
   - component: {fileID: 156155070395377395}
-  - component: {fileID: 6910399656170722885}
+  - component: {fileID: 7983913641546364638}
   m_Layer: 0
-  m_Name: Medkit
-  m_TagString: Medkit
+  m_Name: Stamina
+  m_TagString: Stamina
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,7 +138,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6910399656170722885
+--- !u!114 &7983913641546364638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,9 +147,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5431907424587757149}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad26d7003e4ea34f9f8aead20d34c77, type: 3}
+  m_Script: {fileID: 11500000, guid: 074f3e05990adb24493118b07a35f989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  itemHealAmount: 100
+  itemImage: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  itemHealAmount: 0
   groundPickup: {fileID: 0}

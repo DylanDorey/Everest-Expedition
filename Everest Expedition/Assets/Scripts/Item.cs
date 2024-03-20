@@ -8,15 +8,19 @@ using UnityEngine;
  */
 public class Item : MonoBehaviour
 {
-    public Sprite itemSprite;
+    public Sprite itemImage;
     public float itemHealAmount;
     public GameObject groundPickup;
 
     public void OnCollisionEnter(Collision collision)
     {
+        //if the game object that collides with the item is tagged "Player"
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().PickupItem(gameObject);
+            //Access the player controller class and call the, PickupItem method, passing in the item gameobject as the item to pick up
+            collision.gameObject.GetComponent<InventoryManager>().PickupItem(gameObject);
+
+            Destroy(gameObject);
         }
     }
 }
