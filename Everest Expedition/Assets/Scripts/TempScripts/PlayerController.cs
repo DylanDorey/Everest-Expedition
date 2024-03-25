@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public PlayerInput playerInput;
 
     public float playerSpeed = 5f;
+    public float rotateSpeed = 5f;
     private void Awake()
     {
         //reference for the PlayerInput scriptable object
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour
         //reads the Vector2 value from the playerActions components and from the move action (AD) in our actions scriptable object
         Vector2 moveVec = playerInput.Player.Move.ReadValue<Vector2>();
         transform.Translate(new Vector3(0f, 0f, moveVec.y) * playerSpeed * Time.deltaTime);
+
+        Vector2 rotateVec = playerInput.Player.Rotate.ReadValue<Vector2>();
+        transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,6 +57,13 @@ public class PlayerController : MonoBehaviour
         //On move is only going to fire when the event is called. It doesn't continualy get called when held
         Vector2 moveVec = context.ReadValue<Vector2>();
         transform.Translate(new Vector3(0f, 0f, moveVec.y) * playerSpeed * Time.deltaTime);
+    }
+
+    public void OnRotate(InputAction.CallbackContext context)
+    {
+        //On rotate fires when called with A or D
+        Vector2 rotateVec = context.ReadValue<Vector2>();
+        transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
     }
 
     public void OnInventorySelect()
