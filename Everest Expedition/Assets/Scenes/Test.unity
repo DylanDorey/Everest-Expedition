@@ -1565,7 +1565,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!65 &766040727
 BoxCollider:
@@ -3015,6 +3015,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouse_pos: {x: 0, y: 0, z: 0}
   target: {fileID: 1456912801}
+  character_pos: {fileID: 1474989858}
+  pickaxe: {fileID: 766040721}
   object_pos: {x: 0, y: 0, z: 0}
   angle: 0
 --- !u!4 &1456912801
@@ -3245,8 +3247,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474989858}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.41937208, y: 1.302181, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.41937208, y: 1.302181, z: -0.11}
   m_LocalScale: {x: 1, y: 0.62124, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3304,6 +3306,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 3807f2c6-753b-4043-bb11-57ee71b6a3bf
     m_ActionName: Player/Inventory[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1474989866}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnRotate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c855545a-1fe4-4b95-8836-79eee366d990
+    m_ActionName: Player/Rotate[/Keyboard/a,/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3322,6 +3340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 5
+  rotateSpeed: 100
 --- !u!1 &1514957165
 GameObject:
   m_ObjectHideFlags: 0
@@ -4572,7 +4591,6 @@ GameObject:
   - component: {fileID: 1928784864}
   - component: {fileID: 1928784863}
   - component: {fileID: 1928784862}
-  - component: {fileID: 1928784866}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -4666,33 +4684,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1928784866
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1928784861}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!1 &1987185251
 GameObject:
   m_ObjectHideFlags: 0
@@ -4964,6 +4955,6 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1928784865}
   - {fileID: 1811751774}
-  - {fileID: 1474989864}
   - {fileID: 1114643317}
   - {fileID: 1657056013}
+  - {fileID: 1474989864}
