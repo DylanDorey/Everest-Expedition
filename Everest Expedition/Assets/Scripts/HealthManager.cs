@@ -32,6 +32,7 @@ public class HealthManager : MonoBehaviour
             if (invincibilityTimer >= invincibilityDuration)
             { 
                 isInvincible = false;
+                playerRenderer.enabled = true;
             }
 
             if (blinkTimer >= blinkInterval)

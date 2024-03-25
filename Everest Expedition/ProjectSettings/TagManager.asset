@@ -8,6 +8,7 @@ TagManager:
   - Stamina
   - Water
   - Spikes
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
