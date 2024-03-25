@@ -42,7 +42,7 @@ public class HealthManager : MonoBehaviour
         }
         else
         {
-            isInvincible = true;
+            isInvincible = false;
         }
     }
     public void takeDamage(int damage)

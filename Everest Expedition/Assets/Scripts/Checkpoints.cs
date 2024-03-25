@@ -21,6 +21,5 @@ public class Checkpoints : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         vectorpoint = other.transform.position;
-        Destroy(other.gameObject);
     }
 }
