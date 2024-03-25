@@ -8,7 +8,7 @@ public class Checkpoints : MonoBehaviour
     [SerializeField] List<GameObject> Check;
     [SerializeField] Vector3 Playerpoint;
     public float threshold;
-    public Vector3 vectorpoint;
+    public Vector3 playerPosition;
 
     private void Update()
     {
@@ -20,6 +20,8 @@ public class Checkpoints : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        vectorpoint = other.transform.position;
+        playerPosition = other.transform.position;
+        Playerpoint = playerPosition;
+        Destroy(other.gameObject);
     }
 }
