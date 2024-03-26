@@ -21,8 +21,20 @@ public class PlayerController : MonoBehaviour
     //reference to scriptable object PlayerInput
     public PlayerInput playerInput;
 
-    public float playerSpeed = 5f;
-    public float rotateSpeed = 5f;
+    public bool hasJumped = false;
+
+    [Range(1f, 15f)]
+    public float playerSpeed = 8f;
+
+    [Range(1f, 150f)]
+    public float rotateSpeed = 75f;
+
+    [Range(1f, 10f)]
+    public float jumpHeight = 5;
+
+    [Range(1f, 5f)]
+    public float jumpDelay = 2f;
+
     private void Awake()
     {
         //reference for the PlayerInput scriptable object
@@ -48,22 +60,61 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// allows the player to rotate when an input action is detected from the action map
+    /// Allows the player to move forward and backwards
     /// </summary>
-
+    /// <param name="context"> the context in which the button was pressed </param>
     public void OnMove(InputAction.CallbackContext context)
     {
-
-        //On move is only going to fire when the event is called. It doesn't continualy get called when held
+        //On move is only going to fire when called with W or S
         Vector2 moveVec = context.ReadValue<Vector2>();
-        transform.Translate(new Vector3(0f, 0f, moveVec.y) * playerSpeed * Time.deltaTime);
+        transform.Translate(new Vector3(0f, 0f, moveVec.y) * -playerSpeed * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Allows the player to rotate the camera
+    /// </summary>
+    /// <param name="context"> the context in which the button was pressed </param>
     public void OnRotate(InputAction.CallbackContext context)
     {
         //On rotate fires when called with A or D
         Vector2 rotateVec = context.ReadValue<Vector2>();
         transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// Allows the player to jump
+    /// </summary>
+    /// <param name="context"> the context in which the button was pressed </param>
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        //if the player hasn't jumped yet
+        if (!hasJumped)
+        {
+            //On hyperspace is only going to fire when the event is called. It doesn't continualy get called when held
+            if (context.performed)
+            {
+                //jump and start the jump delay
+                StartCoroutine(JumpDelay());
+            }
+        }
+    }
+
+    /// <summary>
+    /// allows the player to jump vertically every 2 seconds
+    /// </summary>
+    private IEnumerator JumpDelay()
+    {
+        for (int index = 0; index < 1; index++)
+        {
+            //the player has jumped so disable jumping for 2 seconds and apply upward force to the rigid body
+            hasJumped = true;
+            GetComponent<Rigidbody>().AddForce(transform.up * (jumpHeight * 1000) * Time.deltaTime);
+
+            yield return new WaitForSeconds(jumpDelay);
+        }
+
+        //set hasJumped back to false
+        hasJumped = false;
     }
 
     public void OnInventorySelect()
