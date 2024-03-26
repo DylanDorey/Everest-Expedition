@@ -17,6 +17,10 @@ public class InventoryManager : MonoBehaviour
 
     public GameObject inventorySlots;
 
+    public GameObject waterPrefab;
+    public GameObject medkitPrefab;
+    public GameObject staminaPrefab;
+
     public GameObject[] itemsArray;
 
     private void Awake()
@@ -32,6 +36,8 @@ public class InventoryManager : MonoBehaviour
             //otherwise set this to _instance
             _instance = this;
         }
+
+        itemsArray = new GameObject[] { waterPrefab, medkitPrefab, staminaPrefab };
     }
 
     /// <summary>
@@ -44,18 +50,19 @@ public class InventoryManager : MonoBehaviour
         {
             if (inventorySlots.transform.GetChild(index).gameObject.GetComponent<Image>().sprite == null)
             {
-
                 inventorySlots.transform.GetChild(index).gameObject.GetComponent<InventorySlot>().slotImage = item.GetComponent<Item>().itemImage;
 
                 //set the inventory slot image to the game object's image that the player just picked up
                 inventorySlots.transform.GetChild(index).gameObject.GetComponent<InventorySlot>().SetInventoryImage();
-                
+
                 //set the game object in the inventory slot to the gameobject the player just picked up
                 for (int index2 = 0; index2 < itemsArray.Length; index2++)
                 {
-                    if (itemsArray[index2].gameObject == item.gameObject)
+                    if (item.name == itemsArray[index2].name)
                     {
-                        inventorySlots.transform.GetChild(index).gameObject.GetComponent<InventorySlot>().slotItem = itemsArray[index2];
+                        inventorySlots.transform.GetChild(index).gameObject.GetComponent<InventorySlot>().slotItem = itemsArray[index2].gameObject;
+
+                        break;
                     }
                 }
 

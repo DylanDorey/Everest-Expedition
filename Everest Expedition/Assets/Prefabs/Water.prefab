@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d292a2da601cf245b910bdc8cb0fa0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  itemImage: {fileID: 21300000, guid: ddde196c963525241b495cc871be45b1, type: 3}
   itemHealAmount: 0
   groundPickup: {fileID: 0}
   unlimitedDuration: 10

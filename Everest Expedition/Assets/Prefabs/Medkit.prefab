@@ -150,6 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad26d7003e4ea34f9f8aead20d34c77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  itemImage: {fileID: 21300000, guid: 0d07436748cc2a440a1cc7caf9cc1319, type: 3}
   itemHealAmount: 100
   groundPickup: {fileID: 0}
