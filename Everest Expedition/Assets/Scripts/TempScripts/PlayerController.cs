@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /*
  * Author: [Dorey, Dylan]
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public float rotateSpeed = 75f;
 
     [Range(1f, 10f)]
-    public float jumpHeight = 5;
+    public float jumpHeight = 5f;
 
     [Range(1f, 5f)]
     public float jumpDelay = 2f;
@@ -52,11 +53,6 @@ public class PlayerController : MonoBehaviour
 
         Vector2 rotateVec = playerInput.Player.Rotate.ReadValue<Vector2>();
         transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
     }
 
     /// <summary>
@@ -108,7 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             //the player has jumped so disable jumping for 2 seconds and apply upward force to the rigid body
             hasJumped = true;
-            GetComponent<Rigidbody>().AddForce(transform.up * (jumpHeight * 1000) * Time.deltaTime);
+            GetComponent<Rigidbody>().AddForce(transform.up * (jumpHeight * 1000f) * Time.deltaTime);
 
             yield return new WaitForSeconds(jumpDelay);
         }
@@ -117,8 +113,55 @@ public class PlayerController : MonoBehaviour
         hasJumped = false;
     }
 
-    public void OnInventorySelect()
+    /// <summary>
+    /// Uses any item that is stored in inventory slots 1-5
+    /// </summary>
+    public void OnSlot1Select()
     {
-        //UseItemInSlot();
+        OnSlotSelect(0);
+    }
+
+    public void OnSlot2Select()
+    {
+        OnSlotSelect(1);
+    }
+
+    public void OnSlot3Select()
+    {
+        OnSlotSelect(2);
+    }
+
+    public void OnSlot4Select()
+    {
+        OnSlotSelect(3);
+    }
+
+    public void OnSlot5Select()
+    {
+        OnSlotSelect(4);
+    }
+    //////////////////////////////////////////////
+
+    /// <summary>
+    /// Applies the item's ability/use to the player when selectedc and removes the item from the inventory
+    /// </summary>
+    /// <param name="slotIndex"> the slot that is selected by the player </param>
+    private void OnSlotSelect(int slotIndex)
+    {
+        //inventory slot at slotIndex reference
+        InventorySlot inventorySlot = InventoryManager.Instance.inventorySlots.transform.GetChild(slotIndex).GetComponent<InventorySlot>();
+
+        //if the slot has an item
+        if (inventorySlot.hasItem)
+        {
+            //use it, then remove it
+            PlayerData.Instance.ApplyItemAbility(inventorySlot.itemUse);
+            InventoryManager.Instance.RemoveItemOnUse(slotIndex);
+        }
+        else //otherwise display an error saying the slot is empty
+        {
+            //Display Error Message that slotIndex is empty
+            Debug.Log("ERROR: Slot " + (slotIndex + 1) + " is Empty!");
+        }
     }
 }

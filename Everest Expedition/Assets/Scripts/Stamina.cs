@@ -8,17 +8,17 @@ using UnityEngine;
  * [Stamina that the player can pickup, and heal thirst back to full]
  */
 
-public class Stamina : Item
+public class Stamina : Item, IItemBehavior
 {
     /// <summary>
     /// heals the players thirst back to full
     /// </summary>
-    public void HealPlayerThirst()
+    public void UseItem(PlayerData playerData)
     {
         //set the itemHealAmount to the amount of health the player is missing
-        itemHealAmount = 100 - PlayerData.Instance.playerThirst;
+        itemHealAmount = 100 - playerData.playerThirst;
 
         //add the itemHealAmount to the player's health to bring them back to full health
-        PlayerData.Instance.playerThirst += itemHealAmount;
+        playerData.playerThirst += itemHealAmount;
     }
 }

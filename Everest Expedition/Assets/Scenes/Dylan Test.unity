@@ -770,8 +770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c32c82bd06bd949ac38ecb335346d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasItem: 0
   slotImage: {fileID: 0}
-  slotItem: {fileID: 0}
 --- !u!1 &383510478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,8 +1115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c32c82bd06bd949ac38ecb335346d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasItem: 0
   slotImage: {fileID: 0}
-  slotItem: {fileID: 0}
 --- !u!1 &551330052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,8 +1324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c32c82bd06bd949ac38ecb335346d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasItem: 0
   slotImage: {fileID: 0}
-  slotItem: {fileID: 0}
 --- !u!1001 &695761236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2048,8 +2048,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c32c82bd06bd949ac38ecb335346d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasItem: 0
   slotImage: {fileID: 0}
-  slotItem: {fileID: 0}
 --- !u!1 &1129182176
 GameObject:
   m_ObjectHideFlags: 0
@@ -2890,7 +2890,7 @@ GameObject:
   - component: {fileID: 1325449047}
   - component: {fileID: 1325449050}
   - component: {fileID: 1325449048}
-  - component: {fileID: 1325449049}
+  - component: {fileID: 1325449051}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3046,7 +3046,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1325449050}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnJump
         m_Mode: 0
@@ -3061,13 +3061,89 @@ MonoBehaviour:
     m_ActionId: efca6f4b-a1ed-4082-8965-67f95c2baa1b
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1325449050}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSlot1Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3807f2c6-753b-4043-bb11-57ee71b6a3bf
     m_ActionName: Player/Inventory[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c855545a-1fe4-4b95-8836-79eee366d990
     m_ActionName: Player/Rotate[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1325449050}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSlot2Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7141a7d0-d0c2-489d-a7dd-2588f0ef1adc
+    m_ActionName: Player/Slot2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1325449050}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSlot3Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cdd2447b-2026-42f4-917d-b4fe6168f3a0
+    m_ActionName: Player/Slot3[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1325449050}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSlot4Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f530a6fc-e166-44ac-ae6d-9027587e9a52
+    m_ActionName: Player/Slot4[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1325449050}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSlot5Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cc847da6-7c46-4460-afa2-8479b6d2875e
+    m_ActionName: Player/Slot5[/Keyboard/5]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3089,7 +3165,24 @@ MonoBehaviour:
   playerScore: 0
   playerHealth: 100
   playerThirst: 100
---- !u!114 &1325449049
+--- !u!114 &1325449050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325449040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a82edbf313a7d409dc0e4ef7faf582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasJumped: 0
+  playerSpeed: 8
+  rotateSpeed: 75
+  jumpHeight: 5
+  jumpDelay: 2
+--- !u!114 &1325449051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3109,22 +3202,12 @@ MonoBehaviour:
   staminaPrefab: {fileID: 5431907424587757149, guid: 2e9cc48784586c945807197af435b2c6,
     type: 3}
   itemsArray: []
---- !u!114 &1325449050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1325449040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09a82edbf313a7d409dc0e4ef7faf582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasJumped: 0
-  playerSpeed: 8
-  rotateSpeed: 75
-  jumpHeight: 5
+  waterAbility: {fileID: -5274311079529148124, guid: 47fc169acc860f9459ecc4cae563e312,
+    type: 3}
+  medkitAbility: {fileID: 6910399656170722885, guid: 7060b89513699184d998dc9db260829f,
+    type: 3}
+  staminaAbility: {fileID: 7983913641546364638, guid: 2e9cc48784586c945807197af435b2c6,
+    type: 3}
 --- !u!1 &1326343404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3741,8 +3824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c32c82bd06bd949ac38ecb335346d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasItem: 0
   slotImage: {fileID: 0}
-  slotItem: {fileID: 0}
 --- !u!1 &1622740305
 GameObject:
   m_ObjectHideFlags: 0
@@ -4298,7 +4381,7 @@ PrefabInstance:
     - target: {fileID: 7739175473511107642, guid: 47fc169acc860f9459ecc4cae563e312,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.84
+      value: 0.93
       objectReference: {fileID: 0}
     - target: {fileID: 7739175473511107642, guid: 47fc169acc860f9459ecc4cae563e312,
         type: 3}
