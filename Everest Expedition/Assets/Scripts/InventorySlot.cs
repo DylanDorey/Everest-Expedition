@@ -11,8 +11,9 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
+    public bool hasItem;
     public Sprite slotImage;
-    public GameObject slotItem;
+    public IItemBehavior itemUse;
 
     public void SetInventoryImage()
     {

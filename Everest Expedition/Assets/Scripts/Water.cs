@@ -8,12 +8,17 @@ using UnityEngine;
  * [Water that the player can pickup, and have unlimited thirst for a specified duration]
  */
 
-public class Water : Item
+public class Water : Item, IItemBehavior
 {
-    public float unlimitedDuration = 10f;
+    float unlimitedDuration = 10f;
 
-    public void StartUnlimitedThirst()
+    /// <summary>
+    /// gives the player unlimited thirst for 10 seconds
+    /// </summary>
+    /// <param name="playerData"></param>
+    public void UseItem(PlayerData playerData)
     {
-        StartCoroutine(PlayerData.Instance.UnlimitedThirst(unlimitedDuration));
+        //Start the unlimited thirst coroutine in the player data class
+        playerData.StartCoroutine(playerData.UnlimitedThirst(unlimitedDuration));
     }
 }

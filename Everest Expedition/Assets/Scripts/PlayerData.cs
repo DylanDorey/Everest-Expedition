@@ -36,9 +36,9 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    private void Update()
+    void Update()
     {
-        while (unlimitedThirst)
+        if (unlimitedThirst)
         {
             playerThirst = 100f;
         }
@@ -57,6 +57,8 @@ public class PlayerData : MonoBehaviour
 
     public IEnumerator UnlimitedThirst(float unlimitedDuration)
     {
+        float originalThirst = playerThirst;
+
         for (int index = 0; index < 1; index++)
         {
             unlimitedThirst = true;
@@ -65,5 +67,16 @@ public class PlayerData : MonoBehaviour
         }
 
         unlimitedThirst = false;
+
+        playerThirst = originalThirst;
+    }
+
+    /// <summary>
+    /// Applies the items ability to the player data class
+    /// </summary>
+    /// <param name="itemBehavior"> the use of the item/function </param>
+    public void ApplyItemAbility(IItemBehavior itemBehavior)
+    {
+        itemBehavior.UseItem(this);
     }
 }
