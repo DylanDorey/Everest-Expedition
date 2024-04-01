@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public enum PlayerState
 {
     onStart,
+    thirstEmpty,
     onDeath,
     onClimb,
     onFall
@@ -44,6 +45,16 @@ public class PlayerController : MonoBehaviour
 
         //turn playerActions on
         playerInput.Enable();
+    }
+
+    private void OnEnable()
+    {
+        PlayerEventBus.Subscribe(PlayerState.onDeath, OnDeath);
+    }
+
+    private void OnDisable()
+    {
+        PlayerEventBus.Unsubscribe(PlayerState.onDeath, OnDeath);
     }
 
     void FixedUpdate()
@@ -164,5 +175,10 @@ public class PlayerController : MonoBehaviour
             //Display Error Message that slotIndex is empty
             Debug.Log("ERROR: Slot " + (slotIndex + 1) + " is Empty!");
         }
+    }
+
+    private void OnDeath()
+    {
+
     }
 }

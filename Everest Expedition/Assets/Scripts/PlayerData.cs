@@ -21,6 +21,9 @@ public class PlayerData : MonoBehaviour
     public float playerHealth;
     public float playerThirst;
 
+    public bool thirstEmpty = false;
+    private float drainTick = 5f;
+
     private void Awake()
     {
         //if _instance contains something and it isn't this
@@ -36,11 +39,41 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        StartThirstDrain();
+    }
+
+    private void OnEnable()
+    {
+        PlayerEventBus.Subscribe(PlayerState.onStart, StartThirstDrain);
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
     void Update()
     {
         if (unlimitedThirst)
         {
             playerThirst = 100f;
+            thirstEmpty = false;
+        }
+
+        if(playerThirst <= 0)
+        {
+            thirstEmpty = true;
+        }
+        else
+        {
+            thirstEmpty = false;
+        }
+
+        if (playerHealth <= 0)
+        {
+            PlayerEventBus.Publish(PlayerState.onDeath);
         }
     }
 
@@ -78,6 +111,49 @@ public class PlayerData : MonoBehaviour
     public void ApplyItemAbility(IItemBehavior itemBehavior)
     {
         itemBehavior.UseItem(this);
+    }
+
+    /// <summary>
+    /// Starts the thirst drain effect
+    /// </summary>
+    private void StartThirstDrain()
+    {
+        //Invoke the thirst drain function
+        InvokeRepeating("ThirstDrain", drainTick, drainTick);
+    }
+
+    /// <summary>
+    /// Drains the players thirst a certain amount every specified amount of seconds
+    /// </summary>
+    private void ThirstDrain()
+    {
+        //if the thirst is not empty
+        if (!thirstEmpty)
+        {
+            //remove 5 thirst
+            playerThirst -= 5f;
+        }
+        else
+        {
+            //otherwise start draining the health exponentially
+            InvokeRepeating("HealthDrain", drainTick, drainTick);
+        }
+    }
+
+    /// <summary>
+    /// Drains the players health when the thirst is empty
+    /// </summary>
+    private void HealthDrain()
+    {
+        //if the thirst is empty
+        if (thirstEmpty)
+        {
+            //remove 3 health from the player
+            playerHealth -= 3f;
+            //playerHealth -= 3f * healthDrainMultiplier;
+            //healthDrainMultiplier = healthDrainMultiplier * 1.01f;
+            //healthTickMultiplier = healthTickMultiplier * 0.998f;
+        }
     }
 
     //private void OnGUI()
