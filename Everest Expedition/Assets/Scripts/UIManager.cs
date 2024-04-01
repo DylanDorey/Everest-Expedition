@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     //health and thirst sliders
     public Slider healthSlider, thirstSlider;
 
+    //health and thirst text
+    public TextMeshProUGUI healthText, thirstText;
+
     private void Start()
     {
         GameEventBus.Publish(GameState.startGame);
@@ -28,6 +31,9 @@ public class UIManager : MonoBehaviour
         //attach the health and thirst slider values to the players health and thirst variables
         healthSlider.value = PlayerData.Instance.playerHealth;
         thirstSlider.value = PlayerData.Instance.playerThirst;
+
+        //check what color the health and thirst text should be
+        HealthThirstTextRed();
     }
 
     private void OnEnable()
@@ -71,5 +77,35 @@ public class UIManager : MonoBehaviour
         menuScreen.SetActive(false);
         playingScreen.SetActive(false);
         gameOverScreen.SetActive(true);
+    }
+
+    /// <summary>
+    /// Turns the health and thirst text red when its empty
+    /// </summary>
+    private void HealthThirstTextRed()
+    {
+        //if the players health is 0
+        if(PlayerData.Instance.playerHealth <= 0)
+        {
+            //set the text color to red
+            healthText.color = Color.red;
+        }
+        else
+        {
+            //otherwsie set it to green
+            healthText.color = Color.green;
+        }
+
+        //if the players thirst is 0
+        if (PlayerData.Instance.playerThirst <= 0)
+        {
+            //set the text to red
+            thirstText.color = Color.red;
+        }
+        else
+        {
+            //otherwise set it to cyan
+            thirstText.color = Color.cyan;
+        }
     }
 }

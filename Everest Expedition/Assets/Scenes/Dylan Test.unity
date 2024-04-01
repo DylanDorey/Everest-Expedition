@@ -4518,9 +4518,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4540316827667954230, guid: 5da7309710fce844fa33dece36e7e575,
         type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 1106819}
+    - target: {fileID: 4540316827667954230, guid: 5da7309710fce844fa33dece36e7e575,
+        type: 3}
       propertyPath: menuScreen
       value: 
       objectReference: {fileID: 1428199238}
+    - target: {fileID: 4540316827667954230, guid: 5da7309710fce844fa33dece36e7e575,
+        type: 3}
+      propertyPath: thirstText
+      value: 
+      objectReference: {fileID: 413550497}
     - target: {fileID: 4540316827667954230, guid: 5da7309710fce844fa33dece36e7e575,
         type: 3}
       propertyPath: healthSlider

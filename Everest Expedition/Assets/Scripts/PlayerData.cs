@@ -80,16 +80,16 @@ public class PlayerData : MonoBehaviour
         itemBehavior.UseItem(this);
     }
 
-    private void OnGUI()
-    {
-        if(GUILayout.Button("Damage Health"))
-        {
-            playerHealth -= 20;
-        }
+    //private void OnGUI()
+    //{
+    //    if(GUILayout.Button("Damage Health"))
+    //    {
+    //        playerHealth -= 20;
+    //    }
 
-        if (GUILayout.Button("Damage Thirst"))
-        {
-            playerThirst -= 20;
-        }
-    }
+    //    if (GUILayout.Button("Damage Thirst"))
+    //    {
+    //        playerThirst -= 20;
+    //    }
+    //}
 }
