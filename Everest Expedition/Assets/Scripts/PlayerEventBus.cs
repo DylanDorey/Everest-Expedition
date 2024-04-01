@@ -5,21 +5,21 @@ using UnityEngine.Events;
 
 /*
  * Author: [Dorey, Dylan]
- * Last Updated: [3/30/2024]
- * [Subscribes, Unsubsribes, and Publishes Game events based upon the game's current state]
+ * Last Updated: [4/1/2024]
+ * [Subscribes, Unsubsribes, and Publishes Game events based upon the players current state]
  */
 
-public class GameEventBus
+public class PlayerEventBus : MonoBehaviour
 {
-    //Initialize a dictionary of game events
-    private static readonly IDictionary<GameState, UnityEvent> Events = new Dictionary<GameState, UnityEvent>();
+    //Initialize a dictionary of player events
+    private static readonly IDictionary<PlayerState, UnityEvent> Events = new Dictionary<PlayerState, UnityEvent>();
 
     /// <summary>
-    /// Adds a listener to a specific game event
+    /// Adds a listener to a specific player event
     /// </summary>
-    /// <param name="eventType"> the specific game event </param>
-    /// <param name="listener"> the function/method getting added to the game event</param>
-    public static void Subscribe(GameState eventType, UnityAction listener)
+    /// <param name="eventType"> the specific player event </param>
+    /// <param name="listener"> the function/method getting added to player event</param>
+    public static void Subscribe(PlayerState eventType, UnityAction listener)
     {
         //the event
         UnityEvent thisEvent;
@@ -32,7 +32,7 @@ public class GameEventBus
         }
         else
         {
-            //otherwise it is a new listener
+            //otherwise add it as a new listener
             thisEvent = new UnityEvent();
             thisEvent.AddListener(listener);
             Events.Add(eventType, thisEvent);
@@ -40,11 +40,11 @@ public class GameEventBus
     }
 
     /// <summary>
-    /// Removes a listener from a specific game event
+    /// Removes a listener from a specific player event
     /// </summary>
-    /// <param name="type"> the specific game event </param>
-    /// <param name="listener"> the function/method getting removed from the game event </param>
-    public static void Unsubscribe(GameState type, UnityAction listener)
+    /// <param name="type"> the specific player event </param>
+    /// <param name="listener"> the function/method getting removed from the player event </param>
+    public static void Unsubscribe(PlayerState type, UnityAction listener)
     {
         //the event
         UnityEvent thisEvent;
@@ -61,7 +61,7 @@ public class GameEventBus
     /// Establishes the current event happening
     /// </summary>
     /// <param name="type"> the specific event </param>
-    public static void Publish(GameState type)
+    public static void Publish(PlayerState type)
     {
         //the event
         UnityEvent thisEvent;

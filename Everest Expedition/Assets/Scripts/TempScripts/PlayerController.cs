@@ -12,9 +12,10 @@ using UnityEngine.UI;
 
 public enum PlayerState
 {
-    alive,
-    dead,
-    climbing
+    onStart,
+    onDeath,
+    onClimb,
+    onFall
 }
 
 public class PlayerController : MonoBehaviour
