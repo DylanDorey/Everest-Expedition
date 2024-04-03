@@ -47,13 +47,13 @@ public class TestHammer : MonoBehaviour
         //convert mouse position to an angle/degree value
         mouse_pos = Input.mousePosition;
         pickaxePos = Camera.main.WorldToScreenPoint(rotationPoint.position);
-        mouse_pos.z = 5.23f;
+        mouse_pos.z = 5f;
         mouse_pos.x = mouse_pos.x - pickaxePos.x;
         mouse_pos.y = mouse_pos.y - pickaxePos.y;
         angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
 
         //apply degree value to picks rotation
-        transform.rotation = Quaternion.Euler(-angle * 0.5f, transform.parent.transform.position.y, 0f);
+        transform.rotation = Quaternion.Euler(-angle * 0.5f, pickPos.rotation.y, 0f);
     }
 
     private void OnCollisionEnter(Collision collision)
