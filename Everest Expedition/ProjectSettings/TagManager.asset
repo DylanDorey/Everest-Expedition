@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Spikes
   - Checkpoint
+  - Ground
   layers:
   - Default
   - TransparentFX
