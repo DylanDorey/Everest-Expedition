@@ -53,8 +53,12 @@ public class TestHammer : MonoBehaviour
         mouse_pos.y = mouse_pos.y - pickaxePos.y;
         angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
 
+        float playerY = playerPos.rotation.y;
+
         //apply degree value to picks rotation
-        transform.rotation = Quaternion.Euler(-angle * 0.3f, playerPos.transform.rotation.y, 0f);
+        transform.rotation = Quaternion.Euler((-angle * 0.3f), angle, 0f);
+        
+        //transform.parent.transform.rotation = Quaternion.Euler(0f, playerPos.rotation.y + 90f, 0f);
     }
 
     private void OnCollisionEnter(Collision collision)
