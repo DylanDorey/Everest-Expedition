@@ -51,7 +51,7 @@ public class TestHammer : MonoBehaviour
         mouse_pos.z = 5f;
         mouse_pos.x = mouse_pos.x - pickaxePos.x;
         mouse_pos.y = mouse_pos.y - pickaxePos.y;
-        angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
+        angle = Mathf.Atan2(mouse_pos.y, 0f) * Mathf.Rad2Deg;
 
         float playerY = playerPos.eulerAngles.y;
 
