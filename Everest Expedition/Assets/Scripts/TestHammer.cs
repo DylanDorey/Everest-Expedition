@@ -5,7 +5,7 @@ using UnityEngine;
 public class TestHammer : MonoBehaviour
 {
     //the multiplier for how how the player gets boosted in the air
-    [Range(0, 50)]
+    [Range(1, 5)]
     public float boostMultiplier;
     
     //rotation and angle properties of hammer
@@ -53,10 +53,10 @@ public class TestHammer : MonoBehaviour
         mouse_pos.y = mouse_pos.y - pickaxePos.y;
         angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
 
-        float playerY = playerPos.rotation.y;
+        float playerY = playerPos.eulerAngles.y;
 
         //apply degree value to picks rotation
-        transform.rotation = Quaternion.Euler((-angle * 0.3f), angle, 0f);
+        transform.rotation = Quaternion.Euler((-angle * 0.3f), playerY, 0f);
         
         //transform.parent.transform.rotation = Quaternion.Euler(0f, playerPos.rotation.y + 90f, 0f);
     }
