@@ -19,7 +19,8 @@ public class TestHammer : MonoBehaviour
     private Vector3 lastMousePosition;
     private Vector3 mouseDelta;
 
-    //reference to player's rigidbody
+    //reference to player's transform and rigidbody
+    public Transform playerPos;
     public Rigidbody playerRB;
 
 
@@ -53,7 +54,7 @@ public class TestHammer : MonoBehaviour
         angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
 
         //apply degree value to picks rotation
-        transform.rotation = Quaternion.Euler(-angle * 0.5f, pickPos.rotation.y, 0f);
+        transform.rotation = Quaternion.Euler(-angle * 0.3f, playerPos.transform.rotation.y, 0f);
     }
 
     private void OnCollisionEnter(Collision collision)

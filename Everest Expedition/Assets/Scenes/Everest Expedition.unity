@@ -149,12 +149,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24746899}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.052335896, y: -0, z: -0, w: 0.9986295}
-  m_LocalPosition: {x: 0.727, y: -1.5950717, z: 6.4543853}
-  m_LocalScale: {x: 0.23102, y: 0.23102, z: 0.23102}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.67700005, y: -0.25099993, z: 0.13500026}
+  m_LocalScale: {x: 0.23102, y: 0.23102002, z: 0.23102002}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1445522157}
+  m_Father: {fileID: 906503893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &24746904
 MeshRenderer:
@@ -2441,6 +2441,7 @@ Transform:
   m_Children:
   - {fileID: 1445522157}
   - {fileID: 1500095636}
+  - {fileID: 24746903}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &919093121
@@ -3332,8 +3333,7 @@ Transform:
   m_LocalPosition: {x: -0.05, y: 2.01, z: -6.117297}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 24746903}
+  m_Children: []
   m_Father: {fileID: 906503893}
   m_LocalEulerAnglesHint: {x: 6, y: 0, z: 0}
 --- !u!114 &1445522158
@@ -3561,10 +3561,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb168f92141e1c4f9037529aa0f140a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostMultiplier: 10
+  boostMultiplier: 5
   rotationPoint: {fileID: 1500095636}
   pickPos: {fileID: 24746903}
   angle: 0
+  playerPos: {fileID: 906503893}
   playerRB: {fileID: 906503889}
 --- !u!65 &1500095638
 BoxCollider:
