@@ -31,10 +31,10 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        tasks = new string[] { "Welcome to Everest Expedition. Walk using W and S", "Look left and right by using A and D", "Walk forward to those spikes", "Grab that medkit there to heal yourself", 
-            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "Thank you for playtesting our Kinesthetic Prototype!" };
+        tasks = new string[] { "Welcome to Everest Expedition Kinesthetic Prototype. Walk by using W and S", "Look left and right by using A and D", "Walk forward to those spikes", "Grab that medkit there to heal yourself", 
+            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint. You will respawn here if you fall off", "Thank you for playtesting our Kinesthetic Prototype!" };
 
-        objectives = new string[] { "Walk forward using W", "Look left and right using A and D", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the next platform", "Fill out the Google Form" };
+        objectives = new string[] { "Walk forward using W", "Look left and right using A and D", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the next platform", "Don' fall off","Please fill out the Google Form" };
     }
     
     private void Start()
@@ -62,13 +62,21 @@ public class UIManager : MonoBehaviour
         GameEventBus.Unsubscribe(GameState.startGame, EnablePlayingUI);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+        //if the other game object is tagged objective
         if (other.gameObject.CompareTag("Objective"))
         {
-            StartCoroutine(DisplayText(other.GetComponent<Objective>().objectiveIndex));
+            //display the objective and task text
+            DisplayText(other.GetComponent<Objective>().objectiveIndex);
             objectiveText.text = SetObjectiveText(other.GetComponent<Objective>().objectiveIndex);
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //clear text when leaving collider
+        centerText.text = "";
     }
 
     /// <summary>
@@ -147,18 +155,10 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="task"> the index of tasks to choose from </param>
     /// <returns></returns>
-    public IEnumerator DisplayText(int task)
+    public void DisplayText(int task)
     {
-        for (int index = 0; index < 1; index++)
-        {
-            //set the center screen text to the correct task
-            centerText.text = tasks[task];
-
-            yield return new WaitForSeconds(5f);
-        }
-
-        //cleat the center screen text
-        centerText.text = "";
+        //set the center screen text to the correct task
+        centerText.text = tasks[task];
     }
 
     /// <summary>
