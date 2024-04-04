@@ -4669,7 +4669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb168f92141e1c4f9037529aa0f140a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostMultiplier: 3
+  boostMultiplier: 2
   rotationPoint: {fileID: 1500095636}
   pickPos: {fileID: 24746903}
   angle: 0
