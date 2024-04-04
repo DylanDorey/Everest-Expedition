@@ -18,9 +18,25 @@ public class UIManager : MonoBehaviour
     //health and thirst sliders
     public Slider healthSlider, thirstSlider;
 
-    //health and thirst text
-    public TextMeshProUGUI healthText, thirstText;
+    //health and thirst text, and center and objective text
+    public TextMeshProUGUI healthText, thirstText, centerText, objectiveText;
 
+    /// <summary>
+    /// KINESTHETIC PROTOTYPE VARIABLES
+    /// </summary>
+    public string[] tasks;
+    public string[] objectives;
+
+    /////////////////////////////////////////
+
+    private void Awake()
+    {
+        tasks = new string[] { "Welcome to Everest Expedition. Walk using W and S", "Look left and right by using A and D", "Walk forward to those spikes", "Grab that medkit there to heal yourself", 
+            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "Thank you for playtesting our Kinesthetic Prototype!" };
+
+        objectives = new string[] { "Walk forward using W", "Look left and right using A and D", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the next platform", "Fill out the Google Form" };
+    }
+    
     private void Start()
     {
         GameEventBus.Publish(GameState.startGame);
@@ -46,6 +62,15 @@ public class UIManager : MonoBehaviour
         GameEventBus.Unsubscribe(GameState.startGame, EnablePlayingUI);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Objective"))
+        {
+            StartCoroutine(DisplayText(other.GetComponent<Objective>().objectiveIndex));
+            objectiveText.text = SetObjectiveText(other.GetComponent<Objective>().objectiveIndex);
+        }
+    }
+
     /// <summary>
     /// enables the menu UI
     /// </summary>
@@ -66,6 +91,10 @@ public class UIManager : MonoBehaviour
         menuScreen.SetActive(false);
         playingScreen.SetActive(true);
         gameOverScreen.SetActive(false);
+
+        //disable the center text and objective text
+        centerText.text = "";
+        objectiveText.text = "";
     }
 
     /// <summary>
@@ -108,4 +137,40 @@ public class UIManager : MonoBehaviour
             thirstText.color = Color.cyan;
         }
     }
+
+    /////////////////////////////////////////////////////////
+    //KINESTHETIC PROTOTYPE UI
+    ////////////////////////////////////////////////////////
+    
+    /// <summary>
+    /// Display the task in the center of the screen
+    /// </summary>
+    /// <param name="task"> the index of tasks to choose from </param>
+    /// <returns></returns>
+    public IEnumerator DisplayText(int task)
+    {
+        for (int index = 0; index < 1; index++)
+        {
+            //set the center screen text to the correct task
+            centerText.text = tasks[task];
+
+            yield return new WaitForSeconds(5f);
+        }
+
+        //cleat the center screen text
+        centerText.text = "";
+    }
+
+    /// <summary>
+    /// Sets the objective for the player
+    /// </summary>
+    /// <param name="objective"> the index of the objectives to choose from </param>
+    /// <returns></returns>
+    public string SetObjectiveText(int objective)
+    {
+        //returns the correct objective depending on the objective the player collides with
+        return objectives[objective];
+    }
+
+    /////////////////////////////////////////////////////
 }
