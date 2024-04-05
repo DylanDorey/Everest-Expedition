@@ -12,13 +12,19 @@ using UnityEngine.UI;
 
 public enum PlayerState
 {
-    alive,
-    dead,
-    climbing
+    onStart,
+    thirstEmpty,
+    onDeath,
+    onClimb,
+    onFall
 }
 
 public class PlayerController : MonoBehaviour
 {
+    //singelton for PlayerController
+    private static PlayerController _instance;
+    public static PlayerController Instance { get { return _instance; } }
+
     //reference to scriptable object PlayerInput
     public PlayerInput playerInput;
 
@@ -36,13 +42,43 @@ public class PlayerController : MonoBehaviour
     [Range(1f, 5f)]
     public float jumpDelay = 2f;
 
+    public Vector3 spawnPos;
+
     private void Awake()
     {
+        //if _instance contains something and it isn't this
+        if (_instance != null && _instance != this)
+        {
+            //Destroy it
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            //otherwise set this to _instance
+            _instance = this;
+        }
+
         //reference for the PlayerInput scriptable object
         playerInput = new PlayerInput(); //constructor
 
         //turn playerActions on
         playerInput.Enable();
+    }
+
+    private void Start()
+    {
+        //initialize spawn pos
+        spawnPos = transform.position;
+    }
+
+    private void OnEnable()
+    {
+        PlayerEventBus.Subscribe(PlayerState.onDeath, OnDeath);
+    }
+
+    private void OnDisable()
+    {
+        PlayerEventBus.Unsubscribe(PlayerState.onDeath, OnDeath);
     }
 
     void FixedUpdate()
@@ -54,6 +90,30 @@ public class PlayerController : MonoBehaviour
         Vector2 rotateVec = playerInput.Player.Rotate.ReadValue<Vector2>();
         transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if the other game object is tagged spikes
+        if (other.CompareTag("Spikes"))
+        {
+            //do damage to player
+            PlayerData.Instance.TakeDamage(40);
+        }
+
+        //if the other game object is tagged death barrier
+        if (other.CompareTag("DeathBarrier"))
+        {
+            //kill the player
+            PlayerEventBus.Publish(PlayerState.onDeath);
+        }
+
+        if (other.gameObject.CompareTag("Checkpoint"))
+        {
+            spawnPos = other.gameObject.transform.position;
+            Destroy(other.gameObject);
+        }
+
+}
 
     /// <summary>
     /// Allows the player to move forward and backwards
@@ -163,5 +223,17 @@ public class PlayerController : MonoBehaviour
             //Display Error Message that slotIndex is empty
             Debug.Log("ERROR: Slot " + (slotIndex + 1) + " is Empty!");
         }
+    }
+
+    /// <summary>
+    /// When the player dies this function will be called
+    /// </summary>
+    private void OnDeath()
+    {
+        //set the players position to the spawn pos
+        transform.position = spawnPos;
+
+        //reset player data to default
+        PlayerData.Instance.ResetPlayerData();
     }
 }

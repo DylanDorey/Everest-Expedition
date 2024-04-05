@@ -10,7 +10,6 @@ public class Item : MonoBehaviour
 {
     public Sprite itemImage;
     public float itemHealAmount;
-    public GameObject groundPickup;
 
     public void OnCollisionEnter(Collision collision)
     {

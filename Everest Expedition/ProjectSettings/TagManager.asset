@@ -9,6 +9,9 @@ TagManager:
   - Water
   - Spikes
   - Checkpoint
+  - Ground
+  - Objective
+  - DeathBarrier
   layers:
   - Default
   - TransparentFX
