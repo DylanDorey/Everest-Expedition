@@ -12,6 +12,10 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    //singelton for InventoryManager
+    private static UIManager _instance;
+    public static UIManager Instance { get { return _instance; } }
+
     //Various screen UI elements
     public GameObject menuScreen, playingScreen, gameOverScreen;
 
@@ -31,6 +35,18 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        //if _instance contains something and it isn't this
+        if (_instance != null && _instance != this)
+        {
+            //Destroy it
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            //otherwise set this to _instance
+            _instance = this;
+        }
+
         tasks = new string[] { "Welcome to Everest Expedition Kinesthetic Prototype. Walk by using W and S", "Look left and right by using A and D", "Walk forward to those spikes", "Grab that medkit there to heal yourself", 
             "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint. You will respawn here if you fall off", "Thank you for playtesting our Kinesthetic Prototype!" };
 
@@ -146,10 +162,36 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tells the player what they have picked up
+    /// </summary>
+    public IEnumerator ItemPickup(string itemName)
+    {
+        for (int index = 0; index < 1; index++)
+        {
+            //if the inventory is not full
+            if (InventoryManager.Instance.inventoryFull == false)
+            {
+                //display what the player picked up for 3 seconds
+                centerText.text = "Picked up " + itemName;
+                yield return new WaitForSeconds(3f);
+            }
+            else
+            {
+                //otherwise tell the player the invetory is full for three seconds
+                centerText.text = "Inventory Full";
+                yield return new WaitForSeconds(3f);
+            }
+        }
+
+        //set the center text back to empty
+        centerText.text = "";
+    }
+
     /////////////////////////////////////////////////////////
     //KINESTHETIC PROTOTYPE UI
     ////////////////////////////////////////////////////////
-    
+
     /// <summary>
     /// Display the task in the center of the screen
     /// </summary>
@@ -157,8 +199,8 @@ public class UIManager : MonoBehaviour
     /// <returns></returns>
     public void DisplayText(int task)
     {
-        //set the center screen text to the correct task
-        centerText.text = tasks[task];
+       //set the center screen text to the correct task
+       centerText.text = tasks[task];
     }
 
     /// <summary>

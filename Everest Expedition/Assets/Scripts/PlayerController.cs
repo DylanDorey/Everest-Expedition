@@ -112,8 +112,7 @@ public class PlayerController : MonoBehaviour
             spawnPos = other.gameObject.transform.position;
             Destroy(other.gameObject);
         }
-
-}
+    }
 
     /// <summary>
     /// Allows the player to move forward and backwards
@@ -217,11 +216,6 @@ public class PlayerController : MonoBehaviour
             //use it, then remove it
             PlayerData.Instance.ApplyItemAbility(inventorySlot.itemUse);
             InventoryManager.Instance.RemoveItemOnUse(slotIndex);
-        }
-        else //otherwise display an error saying the slot is empty
-        {
-            //Display Error Message that slotIndex is empty
-            Debug.Log("ERROR: Slot " + (slotIndex + 1) + " is Empty!");
         }
     }
 

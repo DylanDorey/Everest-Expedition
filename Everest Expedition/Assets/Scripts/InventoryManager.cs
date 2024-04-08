@@ -15,6 +15,9 @@ public class InventoryManager : MonoBehaviour
     private static InventoryManager _instance;
     public static InventoryManager Instance { get { return _instance; } }
 
+    //determines if the inventory is full or not
+    public bool inventoryFull = false;
+
     //inventory slot reference
     public GameObject inventorySlots;
 
@@ -84,11 +87,17 @@ public class InventoryManager : MonoBehaviour
                 //set hasItem to true for the index slot
                 inventorySlot.hasItem = true;
 
+                //show what item the player picked up
+                StartCoroutine(UIManager.Instance.ItemPickup(item.name));
+
                 break;
             } //if all the slots are full
             else if (inventorySlot.hasItem && index == 4)
             {
+                inventoryFull = true;
+
                 //DISPLAY ERROR MESSAGE SAYING INVENTORY IS FULL
+                StartCoroutine(UIManager.Instance.ItemPickup(null));
             }
         }
     }
@@ -104,10 +113,17 @@ public class InventoryManager : MonoBehaviour
         InventorySlot slot = inventorySlots.transform.GetChild(slotIndex).gameObject.GetComponent<InventorySlot>();
 
         //set all used/filled values to empty/false
+        slot.hasItem = false;
         slotImage.sprite = null;
         slot.slotImage = null;
         slot.itemUse = null;
-        slot.hasItem = false;
+
+        //if the inventory was full
+        if (inventoryFull == true)
+        {
+            //set it to not full
+            inventoryFull = false;
+        }
     }
 
 }
