@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class JointControl : MonoBehaviour
 {
+    public Rigidbody pick;
     public Vector3 pickLoc;
     public Vector3 jointPoint;
     private Vector3 mouse_pos;
@@ -11,7 +15,9 @@ public class JointControl : MonoBehaviour
     public GameObject pickaxe;
     public Transform rotPoint;
     public Transform playerPos;
+    public Transform hammer;
     public float angle;
+    public float speed;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +26,7 @@ public class JointControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         jointPoint = joint.transform.position;
 
@@ -39,19 +45,27 @@ public class JointControl : MonoBehaviour
             mouseDelta *= maxMagnitude;
         }
 
-        pickaxe.GetComponent<Rigidbody>().transform.position = mouseDelta;
+        //hammer.rotation = Quaternion.LookRotation(mousePos2D);
+        //pickaxe.GetComponent<Rigidbody>().transform.position = mouseDelta;
 
         //pickaxe.transform.rotation = pickaxe.transform.localRotation;
 
-        mouse_pos = Input.mousePosition;
-        pickLoc = Camera.main.WorldToScreenPoint(rotPoint.position);
-        mouse_pos.z = 5f;
-        mouse_pos.x = mouse_pos.x - pickLoc.x;
-        mouse_pos.y = mouse_pos.y - pickLoc.y;
-        angle = Mathf.Atan2(mouse_pos.x, mouse_pos.y) * Mathf.Rad2Deg;
+        //mouse_pos = Input.mousePosition;
+        //pickLoc = Camera.main.WorldToScreenPoint(rotPoint.position);
+        //mouse_pos.z = 5f;
+        //mouse_pos.x = mouse_pos.x - pickLoc.x;
+        //mouse_pos.y = mouse_pos.y - pickLoc.y;
+        //angle = Mathf.Atan2(mouse_pos.x, mouse_pos.y) * Mathf.Rad2Deg;
+        //
+        //float playerY = playerPos.eulerAngles.y;
+        float Xval = Input.GetAxis("Mouse X");
+        float Yval = Input.GetAxis("Mouse Y");
 
-        float playerY = playerPos.eulerAngles.y;
+        pick.angularVelocity += new Vector3(Xval * speed, Yval, Xval * speed);
 
-        pickaxe.transform.rotation = Quaternion.Euler(0f, playerY, (angle + 90f));
+        void OnCollisionEnter (Collision collision)
+        {
+
+        }
     }
 }
