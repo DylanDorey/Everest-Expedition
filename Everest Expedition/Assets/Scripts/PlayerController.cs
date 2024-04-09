@@ -15,7 +15,7 @@ public enum PlayerState
     onStart,
     thirstEmpty,
     onDeath,
-    onClimb,
+    completedChallenge,
     onFall
 }
 
@@ -107,9 +107,13 @@ public class PlayerController : MonoBehaviour
             PlayerEventBus.Publish(PlayerState.onDeath);
         }
 
+        //if the other game object is tagged checkpoint
         if (other.gameObject.CompareTag("Checkpoint"))
         {
+            //set the new spawnpoint for the player, turn the checpoint off, grant the reward for reaching the checkpoint, they remove the checkpoint game object
             spawnPos = other.gameObject.transform.position;
+            other.gameObject.SetActive(false);
+            other.GetComponent<Checkpoints>().GrantReward();
             Destroy(other.gameObject);
         }
     }

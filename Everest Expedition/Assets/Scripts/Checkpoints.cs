@@ -4,28 +4,33 @@ using UnityEngine;
 
 public class Checkpoints : MonoBehaviour
 {
+    //the awards that the player can receive
+    public GameObject[] itemsToAward;
 
-    [SerializeField] List<GameObject> Check;
-    [SerializeField] Vector3 Playerpoint;
-    public float threshold;
-    public Vector3 playerPosition;
-
-    private void Update()
+    /// <summary>
+    /// Grants the player a random item when they reach the checkpoint
+    /// </summary>
+    public void GrantReward()
     {
-        if(transform.position.y < threshold)
-        {
-            transform.position = new Vector3(Playerpoint.x,Playerpoint.y,Playerpoint.z);
-        }
+        //random index for the item to be awarded
+        int randomAwardIndex = Random.Range(0, itemsToAward.Length);
         
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Checkpoint"))
-        { 
-            playerPosition = other.transform.position;
-            Playerpoint = playerPosition;
-            Destroy(other.gameObject);
-        }
+        //random index to determine the directional offset of the items spawn point
+        int randomOffsetBool = Random.Range(0, 2);
 
+        //the position offset value of the item when it spawns in relative to the checkpoints position
+        float randomSpawnOffset = Random.Range(1f, 2f);
+
+        //if the random 'bool' is 0
+        if (randomOffsetBool == 0)
+        {
+            //spawn the random item opposite of the random offsset
+            Instantiate(itemsToAward[randomAwardIndex], new Vector3(transform.position.x - randomSpawnOffset, transform.position.y, transform.position.z - randomSpawnOffset), Quaternion.identity);
+        }
+        else
+        {
+            //otherwise spawn the random item with the random offset
+            Instantiate(itemsToAward[randomAwardIndex], new Vector3(transform.position.x + randomSpawnOffset, transform.position.y, transform.position.z + randomSpawnOffset), Quaternion.identity);
+        }
     }
 }
