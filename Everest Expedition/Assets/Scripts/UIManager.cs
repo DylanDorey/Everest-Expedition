@@ -13,7 +13,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     //Keeps tracks of the TemmpBar 
-    public float maxTime = 60f;
+    public float maxTime = 60.0f;
     public float decreaseRate = 1f;
     private float currentTime;
 
@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
     /////////////////////////////////////////
 
     private void Awake()
-    {
+    {  
         //if _instance contains something and it isn't this
         if (_instance != null && _instance != this)
         {
@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
-        currentTime = maxTime;
+                currentTime = maxTime;
         GameEventBus.Publish(GameState.startGame);
     }
 
