@@ -12,6 +12,11 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    //Keeps tracks of the TemmpBar 
+    public float maxTime = 60f;
+    public float decreaseRate = 1f;
+    private float currentTime;
+
     //singelton for InventoryManager
     private static UIManager _instance;
     public static UIManager Instance { get { return _instance; } }
@@ -20,7 +25,7 @@ public class UIManager : MonoBehaviour
     public GameObject menuScreen, playingScreen, gameOverScreen;
 
     //health and thirst sliders
-    public Slider healthSlider, thirstSlider;
+    public Slider healthSlider, thirstSlider, tempSlider;
 
     //health and thirst text, and center and objective text
     public TextMeshProUGUI healthText, thirstText, centerText, objectiveText;
@@ -55,6 +60,7 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
+        currentTime = maxTime;
         GameEventBus.Publish(GameState.startGame);
     }
 
@@ -66,6 +72,19 @@ public class UIManager : MonoBehaviour
 
         //check what color the health and thirst text should be
         HealthThirstTextRed();
+
+        // Decrease time
+        currentTime -= decreaseRate * Time.deltaTime;
+        currentTime = Mathf.Max(currentTime, 0f); // Ensure time doesn't go below 0
+
+        // Update slider value
+        tempSlider.value = currentTime / maxTime;
+
+        // Check if time has run out
+        if (currentTime <= 0)
+        {
+            Debug.Log("Player is Dead!");
+        }
     }
 
     private void OnEnable()
@@ -86,6 +105,15 @@ public class UIManager : MonoBehaviour
             //display the objective and task text
             DisplayText(other.GetComponent<Objective>().objectiveIndex);
             objectiveText.text = SetObjectiveText(other.GetComponent<Objective>().objectiveIndex);
+        }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        // Check if collision is with checkpoint prefab
+        if (other.CompareTag("Checkpoint"))
+        {
+            // Reset time to max time
+            currentTime = maxTime;
         }
     }
 

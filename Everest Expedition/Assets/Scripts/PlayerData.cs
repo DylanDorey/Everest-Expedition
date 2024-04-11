@@ -23,11 +23,7 @@ public class PlayerData : MonoBehaviour
     public bool unlimitedThirst = false;
     public bool thirstEmpty = false;
     private float drainTick = 5f;
-    public float staminaDrainRate = 10f; 
-    public float staminaRefillDelay = 1f; 
-    public float staminaRefillRate = 20f;
-    private bool isMoving = false;
-    private Coroutine refillCoroutine;
+
 
     private bool isInvincible = false;
     private float invincibilityTimer = 0f;
@@ -106,27 +102,6 @@ public class PlayerData : MonoBehaviour
             playerRenderer.enabled = true;
         }
     }
-
-    private void FixedUpdate()
-    {
-        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
-        {
-            isMoving = true;
-            StartThirstDrain();
-        }
-        else
-        {
-            if (isMoving)
-            {
-                isMoving = false;
-                if (refillCoroutine != null)
-                {
-                    StopCoroutine(refillCoroutine);
-                }
-                refillCoroutine = StartCoroutine(RefillStamina());
-            }
-        }
-    }
     /// <summary>
     /// when the player starts
     /// </summary>
@@ -198,7 +173,6 @@ public class PlayerData : MonoBehaviour
     /// </summary>
     private void ThirstDrain()
     {
-        playerThirst -= staminaDrainRate * Time.deltaTime;
         //if the thirst is not empty
         if (!thirstEmpty)
         {
@@ -210,21 +184,6 @@ public class PlayerData : MonoBehaviour
             //otherwise start draining the health exponentially
             InvokeRepeating("HealthDrain", drainTick, drainTick);
         }
-    }
-    IEnumerator RefillStamina()
-    {
-        // Wait for the refill delay before starting to refill stamina
-        yield return new WaitForSeconds(staminaRefillDelay);
-
-        while (playerThirst < 100f)
-        {
-            // Refill stamina gradually
-            playerThirst += staminaRefillRate * Time.deltaTime;
-            yield return null;
-        }
-
-        // Ensure stamina is exactly at maximum
-        playerThirst = 100f;
     }
     /// <summary>
     /// Drains the players health when the thirst is empty
