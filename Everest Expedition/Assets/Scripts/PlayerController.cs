@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 spawnPos;
 
+
     private void Awake()
     {
         //if _instance contains something and it isn't this
@@ -117,7 +118,6 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-
     /// <summary>
     /// Allows the player to move forward and backwards
     /// </summary>

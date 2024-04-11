@@ -13,7 +13,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     //Keeps tracks of the TemmpBar 
-    public float maxTime = 60.0f;
+    public float maxTime = 60f;
     public float decreaseRate = 1f;
     private float currentTime;
 
@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
-                currentTime = maxTime;
+        currentTime = maxTime;
         GameEventBus.Publish(GameState.startGame);
     }
 
@@ -74,11 +74,11 @@ public class UIManager : MonoBehaviour
         HealthThirstTextRed();
 
         // Decrease time
-        currentTime -= decreaseRate * Time.deltaTime;
+        maxTime -= decreaseRate * Time.deltaTime;
         currentTime = Mathf.Max(currentTime, 0f); // Ensure time doesn't go below 0
 
         // Update slider value
-        tempSlider.value = currentTime / maxTime;
+        tempSlider.value = currentTime - maxTime;
 
         // Check if time has run out
         if (currentTime <= 0)

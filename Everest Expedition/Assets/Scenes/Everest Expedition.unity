@@ -4179,7 +4179,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906503884}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 548c76e8b13ef0a47ad5c38cad4c33f0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -4254,7 +4254,7 @@ Transform:
   m_GameObject: {fileID: 906503884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -67.72, y: 12.05, z: 80.44}
+  m_LocalPosition: {x: -0.09, y: 0.01, z: -3.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4570,7 +4570,7 @@ GameObject:
   - component: {fileID: 997455006}
   - component: {fileID: 997455005}
   - component: {fileID: 997455004}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -4599,7 +4599,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997455002}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b6dab50a8f6afd6459ed5bcb6fccc8e2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
