@@ -90,11 +90,13 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         GameEventBus.Subscribe(GameState.startGame, EnablePlayingUI);
+        GameEventBus.Subscribe(GameState.gameOver, EnableGameOverUI);
     }
 
     private void OnDisable()
     {
         GameEventBus.Unsubscribe(GameState.startGame, EnablePlayingUI);
+        GameEventBus.Unsubscribe(GameState.gameOver, EnableGameOverUI);
     }
 
     private void OnTriggerStay(Collider other)

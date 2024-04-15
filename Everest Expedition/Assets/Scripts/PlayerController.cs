@@ -58,12 +58,6 @@ public class PlayerController : MonoBehaviour
             //otherwise set this to _instance
             _instance = this;
         }
-
-        //reference for the PlayerInput scriptable object
-        playerInput = new PlayerInput(); //constructor
-
-        //turn playerActions on
-        playerInput.Enable();
     }
 
     private void Start()
@@ -75,11 +69,17 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         PlayerEventBus.Subscribe(PlayerState.onDeath, OnDeath);
+
+        GameEventBus.Subscribe(GameState.startGame, EnablePlayerController);
+        GameEventBus.Subscribe(GameState.gameOver, DisablePlayerController);
     }
 
     private void OnDisable()
     {
         PlayerEventBus.Unsubscribe(PlayerState.onDeath, OnDeath);
+
+        GameEventBus.Unsubscribe(GameState.startGame, EnablePlayerController);
+        GameEventBus.Unsubscribe(GameState.gameOver, DisablePlayerController);
     }
 
     void FixedUpdate()
@@ -116,6 +116,12 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             other.GetComponent<Checkpoints>().GrantReward();
             Destroy(other.gameObject);
+        }
+
+        //if the other game object is tagged Flag
+        if(other.gameObject.CompareTag("Flag"))
+        {
+            GameEventBus.Publish(GameState.gameOver);
         }
     }
     /// <summary>
@@ -233,5 +239,26 @@ public class PlayerController : MonoBehaviour
 
         //reset player data to default
         PlayerData.Instance.ResetPlayerData();
+    }
+
+    /// <summary>
+    /// enables the player's input
+    /// </summary>
+    private void EnablePlayerController()
+    {
+        //reference for the PlayerInput scriptable object
+        playerInput = new PlayerInput(); //constructor
+
+        //turn playerActions on
+        playerInput.Enable();
+    }
+
+    /// <summary>
+    /// disables the player's input
+    /// </summary>
+    private void DisablePlayerController()
+    {
+        //turn playerActions off
+        playerInput.Disable();
     }
 }

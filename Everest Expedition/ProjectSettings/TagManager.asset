@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - Objective
   - DeathBarrier
+  - Flag
   layers:
   - Default
   - TransparentFX
