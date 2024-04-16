@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 8f;
 
     [Range(1f, 150f)]
-    public float rotateSpeed = 75f;
+    public float rotateSpeed;
 
     [Range(1f, 10f)]
     public float jumpHeight = 5f;

@@ -9,8 +9,8 @@ public class CameraPan : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 wantedPosition = target .position + offset;
-        Vector3 smoothPositon = Vector3.Lerp(transform.position, wantedPosition, smoothSpeed * Time.deltaTime);
-        transform.position = smoothPositon;
+        //Vector3 wantedPosition = target .position + offset;
+        //Vector3 smoothPositon = Vector3.Lerp(transform.position, wantedPosition, smoothSpeed * Time.deltaTime);
+        //transform.position = smoothPositon;
     }
 }

@@ -98,6 +98,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Options"",
+                    ""type"": ""Button"",
+                    ""id"": ""a195f356-1e4a-4df7-b3ef-0b68b6efa537"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +241,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Slot5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""133ba9c9-ef13-4dc7-9b32-33c1e414b692"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Options"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,6 +268,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Slot3 = m_Player.FindAction("Slot3", throwIfNotFound: true);
         m_Player_Slot4 = m_Player.FindAction("Slot4", throwIfNotFound: true);
         m_Player_Slot5 = m_Player.FindAction("Slot5", throwIfNotFound: true);
+        m_Player_Options = m_Player.FindAction("Options", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +338,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Slot3;
     private readonly InputAction m_Player_Slot4;
     private readonly InputAction m_Player_Slot5;
+    private readonly InputAction m_Player_Options;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -329,6 +351,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Slot3 => m_Wrapper.m_Player_Slot3;
         public InputAction @Slot4 => m_Wrapper.m_Player_Slot4;
         public InputAction @Slot5 => m_Wrapper.m_Player_Slot5;
+        public InputAction @Options => m_Wrapper.m_Player_Options;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,6 +385,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Slot5.started += instance.OnSlot5;
             @Slot5.performed += instance.OnSlot5;
             @Slot5.canceled += instance.OnSlot5;
+            @Options.started += instance.OnOptions;
+            @Options.performed += instance.OnOptions;
+            @Options.canceled += instance.OnOptions;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -390,6 +416,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Slot5.started -= instance.OnSlot5;
             @Slot5.performed -= instance.OnSlot5;
             @Slot5.canceled -= instance.OnSlot5;
+            @Options.started -= instance.OnOptions;
+            @Options.performed -= instance.OnOptions;
+            @Options.canceled -= instance.OnOptions;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -417,5 +446,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSlot3(InputAction.CallbackContext context);
         void OnSlot4(InputAction.CallbackContext context);
         void OnSlot5(InputAction.CallbackContext context);
+        void OnOptions(InputAction.CallbackContext context);
     }
 }

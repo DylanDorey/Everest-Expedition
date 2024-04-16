@@ -22,13 +22,15 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get { return _instance; } }
 
     //Various screen UI elements
-    public GameObject menuScreen, playingScreen, gameOverScreen;
+    public GameObject menuScreen, playingScreen, optionsScreen, gameOverScreen, sensitivitySlider;
 
     //health and thirst sliders
     public Slider healthSlider, thirstSlider, tempSlider;
 
     //health and thirst text, and center and objective text
     public TextMeshProUGUI healthText, thirstText, centerText, objectiveText;
+
+    private bool optionsOpen = false;
 
     /// <summary>
     /// KINESTHETIC PROTOTYPE VARIABLES
@@ -133,6 +135,7 @@ public class UIManager : MonoBehaviour
         //disable the playing screen and game over screen, but enable the menu screen
         menuScreen.SetActive(true);
         playingScreen.SetActive(false);
+        optionsScreen.SetActive(false);
         gameOverScreen.SetActive(false);
     }
 
@@ -144,11 +147,57 @@ public class UIManager : MonoBehaviour
         //disable the menu and game over screen, but enable the playing screen
         menuScreen.SetActive(false);
         playingScreen.SetActive(true);
+        optionsScreen.SetActive(false);
         gameOverScreen.SetActive(false);
 
         //disable the center text and objective text
         centerText.text = "";
         objectiveText.text = "";
+
+        //disable the cursor
+        Cursor.visible = false;
+    }
+
+    /// <summary>
+    /// opens and closes the option menu when playing
+    /// </summary>
+    public void OptionsUI()
+    {
+        //if the options menu is not open
+        if (optionsOpen == false)
+        {
+            //disable the menu, game over screen, and playing screen, but enable the options menu
+            menuScreen.SetActive(false);
+            playingScreen.SetActive(false);
+            optionsScreen.SetActive(true);
+            gameOverScreen.SetActive(false);
+
+            //disable the center text
+            centerText.text = "";
+
+            //enable the cursor 
+            Cursor.visible = true;
+
+            //set options open to true
+            optionsOpen = true;
+        }
+        else //if the options menu is open
+        {
+            //reenable the playing screen
+            menuScreen.SetActive(false);
+            playingScreen.SetActive(true);
+            optionsScreen.SetActive(false);
+            gameOverScreen.SetActive(false);
+
+            //disable the cursor
+            Cursor.visible = false;
+
+            //update the players sensitivity given the UI slider value
+            PlayerController.Instance.rotateSpeed = sensitivitySlider.GetComponent<Slider>().value;
+
+            //set options open to false
+            optionsOpen = false;
+        }
     }
 
     /// <summary>
