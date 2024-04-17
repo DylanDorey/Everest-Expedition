@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public PlayerInput playerInput;
 
     public bool hasJumped = false;
+    public bool isGrounded = true;
 
     [Range(1f, 15f)]
     public float playerSpeed = 8f;
@@ -43,6 +44,9 @@ public class PlayerController : MonoBehaviour
     public float jumpDelay = 2f;
 
     public Vector3 spawnPos;
+
+    private RaycastHit hit;
+    private Vector3 rayDirection = Vector3.down;
 
 
     private void Awake()
@@ -90,6 +94,8 @@ public class PlayerController : MonoBehaviour
 
         Vector2 rotateVec = playerInput.Player.Rotate.ReadValue<Vector2>();
         transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
+
+        CheckIfGrounded();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -239,6 +245,27 @@ public class PlayerController : MonoBehaviour
 
         //reset player data to default
         PlayerData.Instance.ResetPlayerData();
+    }
+
+    /// <summary>
+    /// checks if the player is grounded
+    /// </summary>
+    private void CheckIfGrounded()
+    {
+        //DEBUG draw ray line
+        //Debug.DrawRay(transform.position, rayDirection, Color.red);
+
+        //if the ray hits something
+        if (Physics.Raycast(transform.position, rayDirection, out hit, 1f))
+        {
+            //is grounded is true
+            isGrounded = true;
+        }
+        else
+        {
+            //otherwise is grounded is false
+            isGrounded = false;
+        }
     }
 
     /// <summary>
