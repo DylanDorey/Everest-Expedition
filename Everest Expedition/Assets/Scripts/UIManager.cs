@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get { return _instance; } }
 
     //Various screen UI elements
-    public GameObject menuScreen, playingScreen, optionsScreen, gameOverScreen, sensitivitySlider;
+    public GameObject menuScreen, playingScreen, optionsScreen, controlsScreen, gameOverScreen, sensitivitySlider;
 
     //health and thirst sliders
     public Slider healthSlider, thirstSlider, tempSlider;
@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI healthText, thirstText, centerText, objectiveText;
 
     private bool optionsOpen = false;
+    private bool controlsOpen = false;
 
     /// <summary>
     /// KINESTHETIC PROTOTYPE VARIABLES
@@ -136,6 +137,7 @@ public class UIManager : MonoBehaviour
         menuScreen.SetActive(true);
         playingScreen.SetActive(false);
         optionsScreen.SetActive(false);
+        controlsScreen.SetActive(false);
         gameOverScreen.SetActive(false);
     }
 
@@ -148,6 +150,7 @@ public class UIManager : MonoBehaviour
         menuScreen.SetActive(false);
         playingScreen.SetActive(true);
         optionsScreen.SetActive(false);
+        controlsScreen.SetActive(false);
         gameOverScreen.SetActive(false);
 
         //disable the center text and objective text
@@ -170,6 +173,7 @@ public class UIManager : MonoBehaviour
             menuScreen.SetActive(false);
             playingScreen.SetActive(false);
             optionsScreen.SetActive(true);
+            controlsScreen.SetActive(false);
             gameOverScreen.SetActive(false);
 
             //disable the center text
@@ -187,6 +191,7 @@ public class UIManager : MonoBehaviour
             menuScreen.SetActive(false);
             playingScreen.SetActive(true);
             optionsScreen.SetActive(false);
+            controlsScreen.SetActive(false);
             gameOverScreen.SetActive(false);
 
             //disable the cursor
@@ -201,6 +206,50 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// opens and closes the option menu when playing
+    /// </summary>
+    public void ControlsUI()
+    {
+        //if the options menu is not open
+        if (controlsOpen == false)
+        {
+            //disable the menu, game over screen, and playing screen, but enable the options menu
+            menuScreen.SetActive(false);
+            playingScreen.SetActive(false);
+            optionsScreen.SetActive(false);
+            controlsScreen.SetActive(true);
+            gameOverScreen.SetActive(false);
+
+            //disable the center text
+            centerText.text = "";
+
+            //enable the cursor 
+            Cursor.visible = true;
+
+            //set options open to true
+            controlsOpen = true;
+        }
+        else //if the options menu is open
+        {
+            //reenable the playing screen
+            menuScreen.SetActive(false);
+            playingScreen.SetActive(true);
+            optionsScreen.SetActive(false);
+            controlsScreen.SetActive(false);
+            gameOverScreen.SetActive(false);
+
+            //disable the cursor
+            Cursor.visible = false;
+
+            //update the players sensitivity given the UI slider value
+            PlayerController.Instance.rotateSpeed = sensitivitySlider.GetComponent<Slider>().value;
+
+            //set options open to false
+            controlsOpen = false;
+        }
+    }
+
+    /// <summary>
     /// enable the game over screen
     /// </summary>
     private void EnableGameOverUI()
@@ -208,6 +257,8 @@ public class UIManager : MonoBehaviour
         //disable the menu and playing screen, but enable the game over screen
         menuScreen.SetActive(false);
         playingScreen.SetActive(false);
+        optionsScreen.SetActive(false);
+        controlsScreen.SetActive(false);
         gameOverScreen.SetActive(true);
     }
 

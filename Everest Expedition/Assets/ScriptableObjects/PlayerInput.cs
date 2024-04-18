@@ -107,6 +107,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Controls"",
+                    ""type"": ""Button"",
+                    ""id"": ""96b21df7-9429-4cdd-a458-522fdd473103"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +261,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Options"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dcc5cb27-0c6d-4926-b95e-7e0011a00f1f"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Controls"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +289,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Slot4 = m_Player.FindAction("Slot4", throwIfNotFound: true);
         m_Player_Slot5 = m_Player.FindAction("Slot5", throwIfNotFound: true);
         m_Player_Options = m_Player.FindAction("Options", throwIfNotFound: true);
+        m_Player_Controls = m_Player.FindAction("Controls", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Slot4;
     private readonly InputAction m_Player_Slot5;
     private readonly InputAction m_Player_Options;
+    private readonly InputAction m_Player_Controls;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -352,6 +374,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Slot4 => m_Wrapper.m_Player_Slot4;
         public InputAction @Slot5 => m_Wrapper.m_Player_Slot5;
         public InputAction @Options => m_Wrapper.m_Player_Options;
+        public InputAction @Controls => m_Wrapper.m_Player_Controls;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,6 +411,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Options.started += instance.OnOptions;
             @Options.performed += instance.OnOptions;
             @Options.canceled += instance.OnOptions;
+            @Controls.started += instance.OnControls;
+            @Controls.performed += instance.OnControls;
+            @Controls.canceled += instance.OnControls;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -419,6 +445,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Options.started -= instance.OnOptions;
             @Options.performed -= instance.OnOptions;
             @Options.canceled -= instance.OnOptions;
+            @Controls.started -= instance.OnControls;
+            @Controls.performed -= instance.OnControls;
+            @Controls.canceled -= instance.OnControls;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -447,5 +476,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSlot4(InputAction.CallbackContext context);
         void OnSlot5(InputAction.CallbackContext context);
         void OnOptions(InputAction.CallbackContext context);
+        void OnControls(InputAction.CallbackContext context);
     }
 }
