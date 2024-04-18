@@ -8,6 +8,6 @@ public class Objective : MonoBehaviour
 
     private void Start()
     {
-        objectiveIndex = objectiveIndex - 1;
+        objectiveIndex -= 1;
     }
 }

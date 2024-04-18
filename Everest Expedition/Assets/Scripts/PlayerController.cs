@@ -28,9 +28,12 @@ public class PlayerController : MonoBehaviour
     //reference to scriptable object PlayerInput
     public PlayerInput playerInput;
 
+    //player controller booleans
     public bool hasJumped = false;
     public bool isGrounded = true;
+    public bool hasLanded = true;
 
+    //player controller attributes
     [Range(1f, 15f)]
     public float playerSpeed = 8f;
 
@@ -43,8 +46,10 @@ public class PlayerController : MonoBehaviour
     [Range(1f, 5f)]
     public float jumpDelay = 2f;
 
+    //spawn position
     public Vector3 spawnPos;
 
+    //raycast elements
     private RaycastHit hit;
     private Vector3 rayDirection = Vector3.down;
 
@@ -260,12 +265,26 @@ public class PlayerController : MonoBehaviour
         {
             //is grounded is true
             isGrounded = true;
+            
+            //set hasLanded to true for 1 frame
+            StartCoroutine(OnLanding());
         }
         else
         {
             //otherwise is grounded is false
             isGrounded = false;
         }
+    }
+
+    /// <summary>
+    /// sets hasLanded to true for 1 frame when landing
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OnLanding()
+    {
+        hasLanded = true;
+        yield return null;
+        hasLanded = false;
     }
 
     /// <summary>

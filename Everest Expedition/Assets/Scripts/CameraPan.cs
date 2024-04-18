@@ -9,11 +9,8 @@ public class CameraPan : MonoBehaviour
     public float smoothSpeed = 5f;
     public Vector3 offset;
 
-    private float defaultRotX = 6f;
-    private float defaultPosY = 2f;
-    private float targetRotX;
-    private float targetPosY;
-    private bool hasSetBackToDefault = false;
+    //default camera position and rotation
+    public Transform defaultPos;
 
     private void FixedUpdate()
     {
@@ -21,17 +18,25 @@ public class CameraPan : MonoBehaviour
         //Vector3 smoothPositon = Vector3.Lerp(transform.position, wantedPosition, smoothSpeed * Time.deltaTime);
         //transform.position = smoothPositon;
 
-        //CheckToAngleCamera();
+        CheckToAngleCamera();
     }
 
+    /// <summary>
+    /// Determines when to move the camera
+    /// </summary>
     private void CheckToAngleCamera()
     {
-        if (PlayerController.Instance.isGrounded)
+        //if the player has landed
+        if (PlayerController.Instance.hasLanded)
         {
+            //return the camera back to its default transform
             ReturnToDefault();
         }
-        else
+        
+        //if the player is not grounded
+        if (PlayerController.Instance.isGrounded == false)
         {
+            //start moving the camera in an upwards orientation
             StartCoroutine(OnBoostCameraAngle());
         }
     }
@@ -41,28 +46,28 @@ public class CameraPan : MonoBehaviour
     /// </summary>
     private IEnumerator OnBoostCameraAngle()
     {
+        //while the player is not grounded
         while (PlayerController.Instance.isGrounded == false)
         {
-            hasSetBackToDefault = false;
-
+            //add values to the x rotation and y position every frame
             transform.eulerAngles += new Vector3(0.003f, 0f, 0f);
-            transform.position += new Vector3(0f, 0.0005f, 0f);
+            transform.position += new Vector3(0f, 0.0004f, 0f);
 
             yield return null;
         }
     }
 
+    /// <summary>
+    /// Lerps the camera back to its default postion
+    /// </summary>
     private void ReturnToDefault()
     {
+        //the timer to lerp by
         float timer = 0f;
+        timer += Time.deltaTime;
 
-        if (!hasSetBackToDefault)
-        {
-            timer += Time.deltaTime;
-
-            //lerp to the default rotation and position
-            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(defaultRotX, transform.rotation.y, transform.rotation.z), timer / 0.5f);
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, defaultPosY, transform.position.z), timer / 0.5f);
-        }
+        //lerp the camera back to the default rotation and position
+        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(6f, transform.eulerAngles.y, transform.eulerAngles.z), timer / 0.5f);
+        transform.position = Vector3.Lerp(transform.position, defaultPos.position, timer / 0.1f);
     }
 }
