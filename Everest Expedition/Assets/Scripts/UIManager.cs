@@ -134,11 +134,7 @@ public class UIManager : MonoBehaviour
     private void EnableMenuUI()
     {
         //disable the playing screen and game over screen, but enable the menu screen
-        menuScreen.SetActive(true);
-        playingScreen.SetActive(false);
-        optionsScreen.SetActive(false);
-        controlsScreen.SetActive(false);
-        gameOverScreen.SetActive(false);
+        SetDisplayScreen(true, false, false, false, false);
     }
 
     /// <summary>
@@ -147,11 +143,7 @@ public class UIManager : MonoBehaviour
     private void EnablePlayingUI()
     {
         //disable the menu and game over screen, but enable the playing screen
-        menuScreen.SetActive(false);
-        playingScreen.SetActive(true);
-        optionsScreen.SetActive(false);
-        controlsScreen.SetActive(false);
-        gameOverScreen.SetActive(false);
+        SetDisplayScreen(false, true, false, false, false);
 
         //disable the center text and objective text
         centerText.text = "";
@@ -170,11 +162,7 @@ public class UIManager : MonoBehaviour
         if (optionsOpen == false)
         {
             //disable the menu, game over screen, and playing screen, but enable the options menu
-            menuScreen.SetActive(false);
-            playingScreen.SetActive(false);
-            optionsScreen.SetActive(true);
-            controlsScreen.SetActive(false);
-            gameOverScreen.SetActive(false);
+            SetDisplayScreen(false, false, true, false, false);
 
             //disable the center text
             centerText.text = "";
@@ -188,11 +176,7 @@ public class UIManager : MonoBehaviour
         else //if the options menu is open
         {
             //reenable the playing screen
-            menuScreen.SetActive(false);
-            playingScreen.SetActive(true);
-            optionsScreen.SetActive(false);
-            controlsScreen.SetActive(false);
-            gameOverScreen.SetActive(false);
+            SetDisplayScreen(false, true, false, false, false);
 
             //disable the cursor
             Cursor.visible = false;
@@ -214,17 +198,10 @@ public class UIManager : MonoBehaviour
         if (controlsOpen == false)
         {
             //disable the menu, game over screen, and playing screen, but enable the options menu
-            menuScreen.SetActive(false);
-            playingScreen.SetActive(false);
-            optionsScreen.SetActive(false);
-            controlsScreen.SetActive(true);
-            gameOverScreen.SetActive(false);
+            SetDisplayScreen(false, false, false, true, false);
 
             //disable the center text
             centerText.text = "";
-
-            //enable the cursor 
-            Cursor.visible = true;
 
             //set options open to true
             controlsOpen = true;
@@ -232,17 +209,7 @@ public class UIManager : MonoBehaviour
         else //if the options menu is open
         {
             //reenable the playing screen
-            menuScreen.SetActive(false);
-            playingScreen.SetActive(true);
-            optionsScreen.SetActive(false);
-            controlsScreen.SetActive(false);
-            gameOverScreen.SetActive(false);
-
-            //disable the cursor
-            Cursor.visible = false;
-
-            //update the players sensitivity given the UI slider value
-            PlayerController.Instance.rotateSpeed = sensitivitySlider.GetComponent<Slider>().value;
+            SetDisplayScreen(false, true, false, false, false);
 
             //set options open to false
             controlsOpen = false;
@@ -255,11 +222,7 @@ public class UIManager : MonoBehaviour
     private void EnableGameOverUI()
     {
         //disable the menu and playing screen, but enable the game over screen
-        menuScreen.SetActive(false);
-        playingScreen.SetActive(false);
-        optionsScreen.SetActive(false);
-        controlsScreen.SetActive(false);
-        gameOverScreen.SetActive(true);
+        SetDisplayScreen(false, false, false, false, true);
     }
 
     /// <summary>
@@ -316,6 +279,23 @@ public class UIManager : MonoBehaviour
 
         //set the center text back to empty
         centerText.text = "";
+    }
+
+    /// <summary>
+    /// enables and disables the correct screen at runtime
+    /// </summary>
+    /// <param name="menu"> sets the menu screen on or off </param>
+    /// <param name="game"> sets the game screen on or off </param>
+    /// <param name="options"> sets the options screen on or off </param>
+    /// <param name="controls"> sets the controls screen on or off </param>
+    /// <param name="over"> sets the game over screen on or off </param>
+    private void SetDisplayScreen(bool menu, bool game, bool options, bool controls, bool over)
+    {
+        menuScreen.SetActive(menu);
+        playingScreen.SetActive(game);
+        optionsScreen.SetActive(options);
+        controlsScreen.SetActive(controls);
+        gameOverScreen.SetActive(over);
     }
 
     /////////////////////////////////////////////////////////

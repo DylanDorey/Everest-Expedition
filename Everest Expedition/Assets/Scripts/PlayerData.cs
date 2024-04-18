@@ -111,7 +111,7 @@ public class PlayerData : MonoBehaviour
         playerRenderer = GetComponent<Renderer>();
 
         //start draining thirst value
-        //StartThirstDrain();
+        StartThirstDrain();
     }
 
     /// <summary>

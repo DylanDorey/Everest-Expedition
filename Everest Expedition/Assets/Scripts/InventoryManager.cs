@@ -49,7 +49,7 @@ public class InventoryManager : MonoBehaviour
 
         //arrays for the item game objects and the items abilities/uses
         itemsArray = new GameObject[] { waterPrefab, medkitPrefab, staminaPrefab };
-        itemAbilities = new IItemBehavior[] { waterPrefab.GetComponent<Water>(), medkitPrefab.GetComponent<Medkit>(), staminaPrefab.GetComponent<Stamina>() };
+        itemAbilities = new IItemBehavior[] { waterAbility, medkitAbility, staminaAbility };
     }
 
     /// <summary>

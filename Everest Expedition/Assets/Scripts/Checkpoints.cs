@@ -25,12 +25,14 @@ public class Checkpoints : MonoBehaviour
         if (randomOffsetBool == 0)
         {
             //spawn the random item opposite of the random offsset
-            Instantiate(itemsToAward[randomAwardIndex], new Vector3(transform.position.x - randomSpawnOffset, transform.position.y, transform.position.z - randomSpawnOffset), Quaternion.identity);
+            GameObject item = Instantiate(itemsToAward[randomAwardIndex], new Vector3(transform.position.x - randomSpawnOffset, transform.position.y, transform.position.z - randomSpawnOffset), Quaternion.identity);
+            item.name = itemsToAward[randomAwardIndex].name;
         }
         else
         {
             //otherwise spawn the random item with the random offset
-            Instantiate(itemsToAward[randomAwardIndex], new Vector3(transform.position.x + randomSpawnOffset, transform.position.y, transform.position.z + randomSpawnOffset), Quaternion.identity);
+            GameObject item = Instantiate(itemsToAward[randomAwardIndex], new Vector3(transform.position.x + randomSpawnOffset, transform.position.y, transform.position.z + randomSpawnOffset), Quaternion.identity);
+            item.name = itemsToAward[randomAwardIndex].name;
         }
     }
 }

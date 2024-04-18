@@ -14,9 +14,8 @@ public enum PlayerState
 {
     onStart,
     thirstEmpty,
+    switchState,
     onDeath,
-    completedChallenge,
-    onFall
 }
 
 public class PlayerController : MonoBehaviour
@@ -166,7 +165,7 @@ public class PlayerController : MonoBehaviour
         //if the player hasn't jumped yet
         if (!hasJumped)
         {
-            //On hyperspace is only going to fire when the event is called. It doesn't continualy get called when held
+            //On Jump is only going to fire when the event is called. It doesn't continualy get called when held
             if (context.performed)
             {
                 //jump and start the jump delay
@@ -220,6 +219,7 @@ public class PlayerController : MonoBehaviour
     {
         OnSlotSelect(4);
     }
+
     //////////////////////////////////////////////
 
     /// <summary>
@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour
         //Debug.DrawRay(transform.position, rayDirection, Color.red);
 
         //if the ray hits something
-        if (Physics.Raycast(transform.position, rayDirection, out hit, 1f))
+        if (Physics.Raycast(transform.position, rayDirection, out hit, 2f))
         {
             //is grounded is true
             isGrounded = true;
