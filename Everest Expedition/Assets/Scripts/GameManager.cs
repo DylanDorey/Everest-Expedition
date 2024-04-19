@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
 
+    public bool isPlaying = false;
+
     void Awake()
     {
         //if _instance contains something and it isn't this
@@ -37,14 +39,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
-
-    }
-
-    private void OnDisable()
-    {
-        
+        //start the game in the menu state
+        GameEventBus.Publish(GameState.menu);
     }
 
     /// <summary>
@@ -63,6 +61,9 @@ public class GameManager : MonoBehaviour
     {
         //publish the startGame game event
         GameEventBus.Publish(GameState.startGame);
+
+        //set is playing to true
+        isPlaying = true;
     }
 
     /// <summary>

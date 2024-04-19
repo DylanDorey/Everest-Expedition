@@ -12,8 +12,6 @@ using UnityEngine.UI;
 
 public enum PlayerState
 {
-    onStart,
-    thirstEmpty,
     switchState,
     onDeath,
 }
@@ -79,6 +77,7 @@ public class PlayerController : MonoBehaviour
         PlayerEventBus.Subscribe(PlayerState.onDeath, OnDeath);
 
         GameEventBus.Subscribe(GameState.startGame, EnablePlayerController);
+        GameEventBus.Subscribe(GameState.gameOver, ResetPlayerController);
         GameEventBus.Subscribe(GameState.gameOver, DisablePlayerController);
     }
 
@@ -87,19 +86,23 @@ public class PlayerController : MonoBehaviour
         PlayerEventBus.Unsubscribe(PlayerState.onDeath, OnDeath);
 
         GameEventBus.Unsubscribe(GameState.startGame, EnablePlayerController);
+        GameEventBus.Unsubscribe(GameState.gameOver, ResetPlayerController);
         GameEventBus.Unsubscribe(GameState.gameOver, DisablePlayerController);
     }
 
     void FixedUpdate()
     {
-        //reads the Vector2 value from the playerActions components and from the move action (AD) in our actions scriptable object
-        Vector2 moveVec = playerInput.Player.Move.ReadValue<Vector2>();
-        transform.Translate(new Vector3(0f, 0f, moveVec.y) * playerSpeed * Time.deltaTime);
+        if (GameManager.Instance.isPlaying)
+        {
+            //reads the Vector2 value from the playerActions components and from the move action (AD) in our actions scriptable object
+            Vector2 moveVec = playerInput.Player.Move.ReadValue<Vector2>();
+            transform.Translate(new Vector3(0f, 0f, moveVec.y) * playerSpeed * Time.deltaTime);
 
-        Vector2 rotateVec = playerInput.Player.Rotate.ReadValue<Vector2>();
-        transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
+            Vector2 rotateVec = playerInput.Player.Rotate.ReadValue<Vector2>();
+            transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
 
-        CheckIfGrounded();
+            CheckIfGrounded();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -131,6 +134,8 @@ public class PlayerController : MonoBehaviour
         //if the other game object is tagged Flag
         if(other.gameObject.CompareTag("Flag"))
         {
+            //set isPlaying to false and publish game over
+            GameManager.Instance.isPlaying = false;
             GameEventBus.Publish(GameState.gameOver);
         }
     }
@@ -231,6 +236,9 @@ public class PlayerController : MonoBehaviour
         //inventory slot at slotIndex reference
         InventorySlot inventorySlot = InventoryManager.Instance.inventorySlots.transform.GetChild(slotIndex).GetComponent<InventorySlot>();
 
+        //highlight the slot selected
+        StartCoroutine(InventoryManager.Instance.HighlightSlot(slotIndex));
+
         //if the slot has an item
         if (inventorySlot.hasItem)
         {
@@ -285,6 +293,16 @@ public class PlayerController : MonoBehaviour
         hasLanded = true;
         yield return null;
         hasLanded = false;
+    }
+
+    /// <summary>
+    /// Resets the player controller
+    /// </summary>
+    private void ResetPlayerController()
+    {
+        spawnPos = new Vector3(0f, 0f, 0f);
+
+        transform.position = spawnPos;
     }
 
     /// <summary>

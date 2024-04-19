@@ -126,4 +126,21 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Highlights the selected slot for a brief duration
+    /// </summary>
+    /// <param name="slotIndex"> the slot being selected </param>
+    /// <returns> the highlight time </returns>
+    public IEnumerator HighlightSlot(int slotIndex)
+    {
+        //darken the inventory slot
+        inventorySlots.transform.GetChild(slotIndex).GetComponent<Image>().color = Color.gray;
+
+        //wait 0.1 seconds
+        yield return new WaitForSeconds(0.2f);
+
+        //lighten the slot back to its normal opacity
+        inventorySlots.transform.GetChild(slotIndex).GetComponent<Image>().color = Color.white;
+    }
+
 }

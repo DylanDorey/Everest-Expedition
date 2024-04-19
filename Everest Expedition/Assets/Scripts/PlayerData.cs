@@ -47,19 +47,14 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        PlayerEventBus.Publish(PlayerState.onStart);
-    }
-
     private void OnEnable()
     {
-        PlayerEventBus.Subscribe(PlayerState.onStart, PlayerStart);
+        GameEventBus.Subscribe(GameState.startGame, PlayerStart);
     }
 
     private void OnDisable()
     {
-        PlayerEventBus.Unsubscribe(PlayerState.onStart, PlayerStart);
+        GameEventBus.Unsubscribe(GameState.startGame, PlayerStart);
     }
 
     void Update()
@@ -79,27 +74,30 @@ public class PlayerData : MonoBehaviour
             thirstEmpty = false;
         }
 
-        if (isInvincible)
+        if (GameManager.Instance.isPlaying)
         {
-            invincibilityTimer += Time.deltaTime;
-            blinkTimer += Time.deltaTime;
+            if (isInvincible)
+            {
+                invincibilityTimer += Time.deltaTime;
+                blinkTimer += Time.deltaTime;
 
-            if (invincibilityTimer >= invincibilityDuration)
+                if (invincibilityTimer >= invincibilityDuration)
+                {
+                    isInvincible = false;
+                    playerRenderer.enabled = true;
+                }
+
+                if (blinkTimer >= blinkInterval)
+                {
+                    playerRenderer.enabled = !playerRenderer.enabled;
+                    blinkTimer = 0f;
+                }
+            }
+            else
             {
                 isInvincible = false;
                 playerRenderer.enabled = true;
             }
-
-            if (blinkTimer >= blinkInterval)
-            {
-                playerRenderer.enabled = !playerRenderer.enabled;
-                blinkTimer = 0f;
-            }
-        }
-        else
-        {
-            isInvincible = false;
-            playerRenderer.enabled = true;
         }
     }
     /// <summary>
@@ -109,6 +107,9 @@ public class PlayerData : MonoBehaviour
     {
         //initialize the player renderer
         playerRenderer = GetComponent<Renderer>();
+
+        //reset the player data back to default
+        ResetPlayerData();
 
         //start draining thirst value
         StartThirstDrain();

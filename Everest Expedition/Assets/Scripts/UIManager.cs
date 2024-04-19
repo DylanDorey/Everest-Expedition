@@ -64,7 +64,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         currentTime = maxTime;
-        GameEventBus.Publish(GameState.startGame);
     }
 
     private void Update()
@@ -92,12 +91,14 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GameEventBus.Subscribe(GameState.menu, EnableMenuUI);
         GameEventBus.Subscribe(GameState.startGame, EnablePlayingUI);
         GameEventBus.Subscribe(GameState.gameOver, EnableGameOverUI);
     }
 
     private void OnDisable()
     {
+        GameEventBus.Unsubscribe(GameState.menu, EnableMenuUI);
         GameEventBus.Unsubscribe(GameState.startGame, EnablePlayingUI);
         GameEventBus.Unsubscribe(GameState.gameOver, EnableGameOverUI);
     }
