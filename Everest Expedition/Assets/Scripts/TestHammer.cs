@@ -70,10 +70,13 @@ public class TestHammer : MonoBehaviour
             mouseDelta = Input.mousePosition - lastMousePosition;
 
             //create a force speed with mouse delta and a boost multiplier
-            float forceSpeed = mouseDelta.y * boostMultiplier;
+            if (GameManager.Instance.isPlaying)
+            {
+                float forceSpeed = mouseDelta.y * boostMultiplier;
 
-            //add that force to the player in an upward motion
-            playerRB.AddForce(Vector3.up * -forceSpeed);
+                //add that force to the player in an upward motion
+                playerRB.AddForce(Vector3.up * -forceSpeed);
+            }
         }
     }
 

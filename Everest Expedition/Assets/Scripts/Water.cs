@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class Water : Item, IItemBehavior
 {
-    float unlimitedDuration = 10f;
+    readonly float unlimitedDuration = 10f;
 
     /// <summary>
     /// gives the player unlimited thirst for 10 seconds

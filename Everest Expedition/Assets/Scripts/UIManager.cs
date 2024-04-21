@@ -10,16 +10,12 @@ using TMPro;
  * [Displays the correct UI for the user depending on what state the game is in]
  */
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
     //Keeps tracks of the TemmpBar 
     public float maxTime = 60f;
     public float decreaseRate = 1f;
     private float currentTime;
-
-    //singelton for InventoryManager
-    private static UIManager _instance;
-    public static UIManager Instance { get { return _instance; } }
 
     //Various screen UI elements
     public GameObject menuScreen, playingScreen, optionsScreen, controlsScreen, gameOverScreen, sensitivitySlider;
@@ -41,29 +37,14 @@ public class UIManager : MonoBehaviour
 
     /////////////////////////////////////////
 
-    private void Awake()
-    {  
-        //if _instance contains something and it isn't this
-        if (_instance != null && _instance != this)
-        {
-            //Destroy it
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            //otherwise set this to _instance
-            _instance = this;
-        }
-
-        tasks = new string[] { "Welcome to Everest Expedition Kinesthetic Prototype. Walk by using W and S", "Look left and right by using A and D", "Walk forward to those spikes", "Grab that medkit there to heal yourself", 
-            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint. You will respawn here if you fall off", "Thank you for playtesting our Kinesthetic Prototype!" };
-
-        objectives = new string[] { "Walk forward using W", "Look left and right using A and D", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the next platform", "Don' fall off","Please fill out the Google Form" };
-    }
-    
     private void Start()
     {
         currentTime = maxTime;
+
+        tasks = new string[] { "Welcome to Everest Expedition Kinesthetic Prototype. Walk by using W and S", "Look left and right by using A and D", "Walk forward to those spikes", "Grab that medkit there to heal yourself",
+            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint. You will respawn here if you fall off", "Thank you for playtesting our Kinesthetic Prototype!" };
+
+        objectives = new string[] { "Walk forward using W", "Look left and right using A and D", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the next platform", "Don' fall off", "Please fill out the Google Form" };
     }
 
     private void Update()
@@ -72,21 +53,14 @@ public class UIManager : MonoBehaviour
         healthSlider.value = PlayerData.Instance.playerHealth;
         thirstSlider.value = PlayerData.Instance.playerThirst;
 
-        //check what color the health and thirst text should be
-        HealthThirstTextRed();
-
-        // Decrease time
-        maxTime -= decreaseRate * Time.deltaTime;
-        currentTime = Mathf.Max(currentTime, 0f); // Ensure time doesn't go below 0
-
         // Update slider value
         tempSlider.value = currentTime - maxTime;
 
-        // Check if time has run out
-        if (currentTime <= 0)
-        {
-            Debug.Log("Player is Dead!");
-        }
+        //check what color the health and thirst text should be
+        HealthThirstTextRed();
+
+        //start the temperature gain
+        TempGain();
     }
 
     private void OnEnable()
@@ -280,6 +254,22 @@ public class UIManager : MonoBehaviour
 
         //set the center text back to empty
         centerText.text = "";
+    }
+
+    /// <summary>
+    /// Increases temperature bar as the player plays
+    /// </summary>
+    private void TempGain()
+    {
+        // Decrease time
+        maxTime -= decreaseRate * Time.deltaTime;
+        currentTime = Mathf.Max(currentTime, 0f); // Ensure time doesn't go below 0
+
+        // Check if time has run out
+        if (currentTime <= 0)
+        {
+            Debug.Log("Player is Dead!");
+        }
     }
 
     /// <summary>

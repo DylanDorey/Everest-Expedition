@@ -16,12 +16,8 @@ public enum PlayerState
     onDeath,
 }
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
-    //singelton for PlayerController
-    private static PlayerController _instance;
-    public static PlayerController Instance { get { return _instance; } }
-
     //reference to scriptable object PlayerInput
     public PlayerInput playerInput;
 
@@ -47,24 +43,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 spawnPos;
 
     //raycast elements
-    private RaycastHit hit;
     private Vector3 rayDirection = Vector3.down;
 
-
-    private void Awake()
-    {
-        //if _instance contains something and it isn't this
-        if (_instance != null && _instance != this)
-        {
-            //Destroy it
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            //otherwise set this to _instance
-            _instance = this;
-        }
-    }
 
     private void Start()
     {
@@ -269,7 +249,7 @@ public class PlayerController : MonoBehaviour
         //Debug.DrawRay(transform.position, rayDirection, Color.red);
 
         //if the ray hits something
-        if (Physics.Raycast(transform.position, rayDirection, out hit, 2f))
+        if (Physics.Raycast(transform.position, rayDirection, 2f))
         {
             //is grounded is true
             isGrounded = true;
@@ -300,8 +280,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void ResetPlayerController()
     {
-        spawnPos = new Vector3(0f, 0f, 0f);
-
         transform.position = spawnPos;
     }
 

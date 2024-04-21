@@ -8,12 +8,8 @@ using UnityEngine;
  * [Contains all player variable data such as health, thirst, etc]
  */
 
-public class PlayerData : MonoBehaviour
+public class PlayerData : Singleton<PlayerData>
 {
-    //singelton for PlayerData
-    private static PlayerData _instance;
-    public static PlayerData Instance { get { return _instance; } }
-
     //int for the player score, floats for player health and player thirst values
     public int playerScore;
     public float playerHealth;
@@ -32,29 +28,16 @@ public class PlayerData : MonoBehaviour
     private Renderer playerRenderer;
     private float blinkTimer = 0f;
 
-    private void Awake()
-    {
-        //if _instance contains something and it isn't this
-        if (_instance != null && _instance != this)
-        {
-            //Destroy it
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            //otherwise set this to _instance
-            _instance = this;
-        }
-    }
-
     private void OnEnable()
     {
         GameEventBus.Subscribe(GameState.startGame, PlayerStart);
+        GameEventBus.Subscribe(GameState.gameOver, StopThirstDrain);
     }
 
     private void OnDisable()
     {
         GameEventBus.Unsubscribe(GameState.startGame, PlayerStart);
+        GameEventBus.Unsubscribe(GameState.gameOver, StopThirstDrain);
     }
 
     void Update()
@@ -124,6 +107,10 @@ public class PlayerData : MonoBehaviour
         playerScore = 0;
         playerHealth = 100;
         playerThirst = 100;
+
+        //set unlimitedThirst and thirstEmpty to false
+        unlimitedThirst = false;
+        thirstEmpty = false;
     }
 
     /// <summary>
@@ -170,6 +157,15 @@ public class PlayerData : MonoBehaviour
     }
 
     /// <summary>
+    /// Stops the thirst drain effect
+    /// </summary>
+    private void StopThirstDrain()
+    {
+        //cancel thirst drain invoke
+        CancelInvoke("ThirstDrain");
+    }
+
+    /// <summary>
     /// Drains the players thirst a certain amount every specified amount of seconds
     /// </summary>
     private void ThirstDrain()
@@ -186,6 +182,7 @@ public class PlayerData : MonoBehaviour
             InvokeRepeating("HealthDrain", drainTick, drainTick);
         }
     }
+
     /// <summary>
     /// Drains the players health when the thirst is empty
     /// </summary>

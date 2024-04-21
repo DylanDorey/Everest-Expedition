@@ -9,12 +9,8 @@ using UnityEngine.UI;
  * [Manages the players inventory]
  */
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : Singleton<InventoryManager>
 {
-    //singelton for InventoryManager
-    private static InventoryManager _instance;
-    public static InventoryManager Instance { get { return _instance; } }
-
     //determines if the inventory is full or not
     public bool inventoryFull = false;
 
@@ -33,20 +29,8 @@ public class InventoryManager : MonoBehaviour
     public Medkit medkitAbility;
     public Stamina staminaAbility;
 
-    private void Awake()
+    private void Start()
     {
-        //if _instance contains something and it isn't this
-        if (_instance != null && _instance != this)
-        {
-            //Destroy it
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            //otherwise set this to _instance
-            _instance = this;
-        }
-
         //arrays for the item game objects and the items abilities/uses
         itemsArray = new GameObject[] { waterPrefab, medkitPrefab, staminaPrefab };
         itemAbilities = new IItemBehavior[] { waterAbility, medkitAbility, staminaAbility };

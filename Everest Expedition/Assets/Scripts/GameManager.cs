@@ -11,47 +11,19 @@ using UnityEngine;
 public enum GameState
 {
     menu,
-    initialize,
     startGame,
     gameOver
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    //singelton for GameManager
-    private static GameManager _instance;
-    public static GameManager Instance { get { return _instance; } }
-
+    //determines if the player is playing or not
     public bool isPlaying = false;
-
-    void Awake()
-    {
-        //if _instance contains something and it isn't this
-        if (_instance != null && _instance != this)
-        {
-            //Destroy it
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            //otherwise set this to _instance
-            _instance = this;
-        }
-    }
 
     private void Start()
     {
         //start the game in the menu state
         GameEventBus.Publish(GameState.menu);
-    }
-
-    /// <summary>
-    /// This will intialize all game elements for Everest Expedition
-    /// </summary>
-    private void InitializeGame()
-    {
-        //publish the initialize game event
-        GameEventBus.Publish(GameState.initialize);
     }
 
     /// <summary>
