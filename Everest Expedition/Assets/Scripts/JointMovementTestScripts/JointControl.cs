@@ -62,10 +62,5 @@ public class JointControl : MonoBehaviour
         float Yval = Input.GetAxis("Mouse Y");
 
         pick.angularVelocity += new Vector3(Xval * speed, Yval, Xval * speed);
-
-        void OnCollisionEnter (Collision collision)
-        {
-
-        }
     }
 }
