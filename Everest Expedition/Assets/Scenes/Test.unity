@@ -589,9 +589,9 @@ GameObject:
   - component: {fileID: 1474989862}
   - component: {fileID: 1474989861}
   - component: {fileID: 1474989859}
-  - component: {fileID: 1474989866}
   - component: {fileID: 1474989865}
   - component: {fileID: 1474989867}
+  - component: {fileID: 1474989870}
   - component: {fileID: 1474989869}
   - component: {fileID: 1474989868}
   m_Layer: 0
@@ -746,7 +746,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1474989866}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
     m_ActionName: Player/Inventory[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1474989866}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnRotate
         m_Mode: 0
@@ -812,27 +812,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &1474989866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474989858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09a82edbf313a7d409dc0e4ef7faf582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasJumped: 0
-  isGrounded: 1
-  hasLanded: 1
-  playerSpeed: 5
-  rotateSpeed: 100
-  jumpHeight: 5
-  jumpDelay: 2
-  spawnPos: {x: 0, y: 0, z: 0}
+  m_Camera: {fileID: 330585545}
 --- !u!59 &1474989867
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -915,6 +895,26 @@ MonoBehaviour:
   hammer: {fileID: 1537110026}
   angle: 0
   speed: 2
+--- !u!114 &1474989870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474989858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a82edbf313a7d409dc0e4ef7faf582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasJumped: 0
+  isGrounded: 1
+  hasLanded: 1
+  playerSpeed: 8
+  rotateSpeed: 0
+  jumpHeight: 5
+  jumpDelay: 2
+  spawnPos: {x: 0, y: 0, z: 0}
 --- !u!1001 &1537110020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -997,6 +997,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: hammerpivotbase
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: df7e2d1672a91034286a815c4d6e54a8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
