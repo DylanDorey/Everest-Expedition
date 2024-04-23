@@ -111,6 +111,19 @@ public class InventoryManager : Singleton<InventoryManager>
     }
 
     /// <summary>
+    /// clears the players inventory
+    /// </summary>
+    public void ClearInventory()
+    {
+        //for the amount of slots there are
+        for (int index = 0; index < inventorySlots.transform.childCount; index++)
+        {
+            //Remove the item
+            RemoveItemOnUse(index);
+        }
+    }
+
+    /// <summary>
     /// Highlights the selected slot for a brief duration
     /// </summary>
     /// <param name="slotIndex"> the slot being selected </param>

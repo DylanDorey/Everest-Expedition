@@ -15,10 +15,15 @@ public class PlayerData : Singleton<PlayerData>
     public float playerHealth;
     public float playerThirst;
 
+    //Keeps tracks of the TemmpBar 
+    public float maxTime = 60f;
+    public float decreaseRate = 1f;
+    public float currentTime;
+
     //thirst drain and unlimited thirst values
     public bool unlimitedThirst = false;
     public bool thirstEmpty = false;
-    private float drainTick = 5f;
+    private readonly float drainTick = 5f;
 
 
     private bool isInvincible = false;
@@ -107,6 +112,7 @@ public class PlayerData : Singleton<PlayerData>
         playerScore = 0;
         playerHealth = 100;
         playerThirst = 100;
+        currentTime = 0f;
 
         //set unlimitedThirst and thirstEmpty to false
         unlimitedThirst = false;
@@ -180,6 +186,27 @@ public class PlayerData : Singleton<PlayerData>
         {
             //otherwise start draining the health exponentially
             InvokeRepeating("HealthDrain", drainTick, drainTick);
+        }
+    }
+
+    /// <summary>
+    /// Increases temperature bar as the player plays
+    /// </summary>
+    public void TempGain()
+    {
+        // Decrease time
+        //maxTime -= decreaseRate * Time.deltaTime;
+        //currentTime = Mathf.Max(currentTime, 0f); // Ensure time doesn't go below 0
+
+        ////Update temp slider value
+        //UIManager.Instance.tempSlider.value = currentTime - maxTime;
+        UIManager.Instance.tempSlider.value = currentTime;
+
+        currentTime += decreaseRate * Time.deltaTime;
+
+        if (currentTime >= maxTime)
+        {
+            PlayerEventBus.Publish(PlayerState.onDeath);
         }
     }
 

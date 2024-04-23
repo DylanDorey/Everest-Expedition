@@ -15,7 +15,6 @@ public class UIManager : Singleton<UIManager>
     //Keeps tracks of the TemmpBar 
     public float maxTime = 60f;
     public float decreaseRate = 1f;
-    private float currentTime;
 
     //Various screen UI elements
     public GameObject menuScreen, playingScreen, optionsScreen, controlsScreen, gameOverScreen, sensitivitySlider;
@@ -39,12 +38,10 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
-        currentTime = maxTime;
+        tasks = new string[] { "Welcome to Everest Expedition System Prototype. Walk by using W and S to start the tutorial.", "Look left and right by using A and D", "Change your sensitivity by pressing ENTER", "View controls by pressing TAB", "Walk forward to those spikes", "Grab that medkit there to heal yourself",
+            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit now", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint! You will be rewarded with a random item when reaching checkpoints", "Thank you for playtesting our System Prototype! Grab the Flag!" };
 
-        tasks = new string[] { "Welcome to Everest Expedition Kinesthetic Prototype. Walk by using W and S", "Look left and right by using A and D", "Walk forward to those spikes", "Grab that medkit there to heal yourself",
-            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint. You will respawn here if you fall off", "Thank you for playtesting our Kinesthetic Prototype!" };
-
-        objectives = new string[] { "Walk forward using W", "Look left and right using A and D", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the next platform", "Don' fall off", "Please fill out the Google Form" };
+        objectives = new string[] { "Walk forward using W, and backwards using S", "Look left and right using A and D", "Press ENTER to open options menu", "Press TAB to view Control Scheme", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the platform", "Don' fall off", "Please fill out the Google Form" };
     }
 
     private void Update()
@@ -53,14 +50,14 @@ public class UIManager : Singleton<UIManager>
         healthSlider.value = PlayerData.Instance.playerHealth;
         thirstSlider.value = PlayerData.Instance.playerThirst;
 
-        // Update slider value
-        tempSlider.value = currentTime - maxTime;
-
         //check what color the health and thirst text should be
         HealthThirstTextRed();
 
-        //start the temperature gain
-        TempGain();
+        if (GameManager.Instance.isPlaying)
+        {
+            //start the temperature gain
+            PlayerData.Instance.TempGain();
+        }
     }
 
     private void OnEnable()
@@ -93,7 +90,7 @@ public class UIManager : Singleton<UIManager>
         if (other.CompareTag("Checkpoint"))
         {
             // Reset time to max time
-            currentTime = maxTime;
+            PlayerData.Instance.currentTime = maxTime;
         }
     }
 
@@ -196,7 +193,9 @@ public class UIManager : Singleton<UIManager>
     /// </summary>
     private void EnableGameOverUI()
     {
+        //enable the cursor 
         //disable the menu and playing screen, but enable the game over screen
+        Cursor.visible = true;
         SetDisplayScreen(false, false, false, false, true);
     }
 
@@ -257,22 +256,6 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
-    /// Increases temperature bar as the player plays
-    /// </summary>
-    private void TempGain()
-    {
-        // Decrease time
-        maxTime -= decreaseRate * Time.deltaTime;
-        currentTime = Mathf.Max(currentTime, 0f); // Ensure time doesn't go below 0
-
-        // Check if time has run out
-        if (currentTime <= 0)
-        {
-            Debug.Log("Player is Dead!");
-        }
-    }
-
-    /// <summary>
     /// enables and disables the correct screen at runtime
     /// </summary>
     /// <param name="menu"> sets the menu screen on or off </param>
@@ -289,15 +272,10 @@ public class UIManager : Singleton<UIManager>
         gameOverScreen.SetActive(over);
     }
 
-    /////////////////////////////////////////////////////////
-    //KINESTHETIC PROTOTYPE UI
-    ////////////////////////////////////////////////////////
-
     /// <summary>
     /// Display the task in the center of the screen
     /// </summary>
     /// <param name="task"> the index of tasks to choose from </param>
-    /// <returns></returns>
     public void DisplayText(int task)
     {
        //set the center screen text to the correct task
@@ -308,12 +286,10 @@ public class UIManager : Singleton<UIManager>
     /// Sets the objective for the player
     /// </summary>
     /// <param name="objective"> the index of the objectives to choose from </param>
-    /// <returns></returns>
+    /// <returns> the objective for the player </returns>
     public string SetObjectiveText(int objective)
     {
         //returns the correct objective depending on the objective the player collides with
         return objectives[objective];
     }
-
-    /////////////////////////////////////////////////////
 }

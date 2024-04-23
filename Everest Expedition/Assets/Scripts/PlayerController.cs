@@ -56,7 +56,7 @@ public class PlayerController : Singleton<PlayerController>
     private void Start()
     {
         //initialize spawn pos
-        spawnPos = transform.position;
+        spawnPos = new Vector3(0f, 0f, 0f);
     }
 
     private void OnEnable()
@@ -66,7 +66,6 @@ public class PlayerController : Singleton<PlayerController>
         //PlayerEventBus.Subscribe(PlayerState.exploreState, SetExplore);
 
         GameEventBus.Subscribe(GameState.startGame, EnablePlayerController);
-        GameEventBus.Subscribe(GameState.gameOver, ResetPlayerController);
         GameEventBus.Subscribe(GameState.gameOver, DisablePlayerController);
     }
 
@@ -77,7 +76,6 @@ public class PlayerController : Singleton<PlayerController>
         //PlayerEventBus.Unsubscribe(PlayerState.exploreState, SetExplore);
 
         GameEventBus.Unsubscribe(GameState.startGame, EnablePlayerController);
-        GameEventBus.Unsubscribe(GameState.gameOver, ResetPlayerController);
         GameEventBus.Unsubscribe(GameState.gameOver, DisablePlayerController);
     }
 
@@ -98,23 +96,30 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnTriggerEnter(Collider other)
     {
-        //if the player enters the climbing trigger
-        if(other.CompareTag("climbingChange"))
-        {
-            PlayerEventBus.Publish(PlayerState.climbingState);
-        }
+        ////if the player enters the climbing trigger
+        //if(other.CompareTag("climbingChange"))
+        //{
+        //    PlayerEventBus.Publish(PlayerState.climbingState);
+        //}
 
-        //if the player enters the exploring trigger
-        if (other.CompareTag("exploreChange"))
-        {
-            PlayerEventBus.Publish(PlayerState.exploreState);
-        }
+        ////if the player enters the exploring trigger
+        //if (other.CompareTag("exploreChange"))
+        //{
+        //    PlayerEventBus.Publish(PlayerState.exploreState);
+        //}
 
         //if the other game object is tagged spikes
         if (other.CompareTag("Spikes"))
         {
             //do damage to player
             PlayerData.Instance.TakeDamage(40);
+        }
+
+        //if the other game object is tagged spikes
+        if (other.CompareTag("Bird"))
+        {
+            //do damage to player
+            PlayerData.Instance.TakeDamage(75);
         }
 
         //if the other game object is tagged death barrier
@@ -290,7 +295,7 @@ public class PlayerController : Singleton<PlayerController>
     /// <summary>
     /// sets hasLanded to true for 1 frame when landing
     /// </summary>
-    /// <returns></returns>
+    /// <returns> wait 1 frame </returns>
     private IEnumerator OnLanding()
     {
         hasLanded = true;
@@ -303,7 +308,16 @@ public class PlayerController : Singleton<PlayerController>
     /// </summary>
     private void ResetPlayerController()
     {
+
+        //set spawnPos back to 0 0 0, and rotation back to default
+        spawnPos = new Vector3(0f, 0f, 0f);
+        transform.eulerAngles = new Vector3(0f, 0f, 0f);
+
+        //set position to spawnPos
         transform.position = spawnPos;
+
+        //clear inventory
+        InventoryManager.Instance.ClearInventory();
     }
 
     /// <summary>
@@ -316,6 +330,9 @@ public class PlayerController : Singleton<PlayerController>
 
         //turn playerActions on
         playerInput.Enable();
+
+        //reset the player controller to its default position
+        ResetPlayerController();
     }
 
     /// <summary>
@@ -325,6 +342,9 @@ public class PlayerController : Singleton<PlayerController>
     {
         //turn playerActions off
         playerInput.Disable();
+
+        //reset the player controller
+        ResetPlayerController();
     }
 
     /// <summary>
