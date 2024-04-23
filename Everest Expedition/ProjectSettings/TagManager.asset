@@ -13,6 +13,8 @@ TagManager:
   - Objective
   - DeathBarrier
   - Flag
+  - climbingChange
+  - exploreChange
   layers:
   - Default
   - TransparentFX

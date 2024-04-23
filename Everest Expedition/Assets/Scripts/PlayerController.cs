@@ -26,6 +26,12 @@ public class PlayerController : Singleton<PlayerController>
     public bool hasJumped = false;
     public bool isGrounded = true;
     public bool hasLanded = true;
+    public bool isClimbing = false;
+    public bool isExploring = true;
+
+    //game objects used in scripts
+    public GameObject jumpPick;
+    public GameObject climbPick;
 
     //player controller attributes
     [Range(1f, 15f)]
@@ -92,11 +98,13 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnTriggerEnter(Collider other)
     {
+        //if the player enters the climbing trigger
         if(other.CompareTag("climbingChange"))
         {
             PlayerEventBus.Publish(PlayerState.climbingState);
         }
 
+        //if the player enters the exploring trigger
         if (other.CompareTag("exploreChange"))
         {
             PlayerEventBus.Publish(PlayerState.exploreState);
@@ -317,5 +325,33 @@ public class PlayerController : Singleton<PlayerController>
     {
         //turn playerActions off
         playerInput.Disable();
+    }
+
+    /// <summary>
+    /// sets the player into the climb state
+    /// </summary>
+    private void SetClimb()
+    {
+        isExploring = false;
+        isClimbing = true;
+        if (isClimbing == true)
+        {
+            jumpPick.SetActive(false);
+            climbPick.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// sets the player into the exploration state
+    /// </summary>
+    private void SetExplore()
+    {
+        isExploring = true;
+        isClimbing = false;
+        if (isExploring == true)
+        {
+            jumpPick.SetActive(true);
+            climbPick.SetActive(false);
+        }
     }
 }
