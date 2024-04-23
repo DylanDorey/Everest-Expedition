@@ -12,8 +12,9 @@ using UnityEngine.UI;
 
 public enum PlayerState
 {
-    switchState,
-    onDeath,
+    climbingState,
+    exploreState,
+    onDeath
 }
 
 public class PlayerController : Singleton<PlayerController>
@@ -55,6 +56,8 @@ public class PlayerController : Singleton<PlayerController>
     private void OnEnable()
     {
         PlayerEventBus.Subscribe(PlayerState.onDeath, OnDeath);
+        //PlayerEventBus.Subscribe(PlayerState.climbingState, SetClimb);
+        //PlayerEventBus.Subscribe(PlayerState.exploreState, SetExplore);
 
         GameEventBus.Subscribe(GameState.startGame, EnablePlayerController);
         GameEventBus.Subscribe(GameState.gameOver, ResetPlayerController);
@@ -64,6 +67,8 @@ public class PlayerController : Singleton<PlayerController>
     private void OnDisable()
     {
         PlayerEventBus.Unsubscribe(PlayerState.onDeath, OnDeath);
+        //PlayerEventBus.Unsubscribe(PlayerState.climbingState, SetClimb);
+        //PlayerEventBus.Unsubscribe(PlayerState.exploreState, SetExplore);
 
         GameEventBus.Unsubscribe(GameState.startGame, EnablePlayerController);
         GameEventBus.Unsubscribe(GameState.gameOver, ResetPlayerController);
@@ -87,6 +92,16 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.CompareTag("climbingChange"))
+        {
+            PlayerEventBus.Publish(PlayerState.climbingState);
+        }
+
+        if (other.CompareTag("exploreChange"))
+        {
+            PlayerEventBus.Publish(PlayerState.exploreState);
+        }
+
         //if the other game object is tagged spikes
         if (other.CompareTag("Spikes"))
         {
