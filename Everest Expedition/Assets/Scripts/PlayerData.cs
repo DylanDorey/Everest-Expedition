@@ -23,7 +23,7 @@ public class PlayerData : Singleton<PlayerData>
     //thirst drain and unlimited thirst values
     public bool unlimitedThirst = false;
     public bool thirstEmpty = false;
-    private readonly float drainTick = 5f;
+    private readonly float drainTick = 3f;
 
 
     private bool isInvincible = false;
