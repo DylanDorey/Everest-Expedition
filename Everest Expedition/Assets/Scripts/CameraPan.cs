@@ -4,23 +4,41 @@ using UnityEngine;
 
 public class CameraPan : MonoBehaviour
 {
-    public Transform target;
-
-    public float smoothSpeed = 5f;
+    //Used to give camera smoother movement
+    public float maxDistance = 5f;
+    public float smoothSpeed = 10f;
     public Vector3 offset;
+    private Vector3 _currentVelocity = Vector3.zero;
+    public Transform target;
 
     //default camera position and rotation
     public Transform defaultPos;
 
     private void FixedUpdate()
     {
-        //Vector3 wantedPosition = target .position + offset;
-        //Vector3 smoothPositon = Vector3.Lerp(transform.position, wantedPosition, smoothSpeed * Time.deltaTime);
-        //transform.position = smoothPositon;
-
         CheckToAngleCamera();
     }
 
+    private void Awake()
+    {
+        offset = transform.position - target.position;  
+    }
+    private void LateUpdate()
+    {
+        Vector3 targetPosition = target.position;
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _currentVelocity, smoothSpeed * Time.deltaTime);
+
+        /* Early test of Smooth camera code
+        //Vector3 wantedPosition = target.position + offset;
+        //Vector3 smoothPositon = Vector3.Lerp(transform.position, wantedPosition, smoothSpeed * Time.deltaTime);
+        //transform.position = smoothPositon;
+        */
+        float distance = Vector3.Distance(transform.position, target.position);
+        if (distance > maxDistance)
+        {
+            transform.position = target.position + (transform.position - target.position) * maxDistance;
+        }
+    }
     /// <summary>
     /// Determines when to move the camera
     /// </summary>
