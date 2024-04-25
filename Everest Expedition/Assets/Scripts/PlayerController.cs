@@ -29,9 +29,13 @@ public class PlayerController : Singleton<PlayerController>
     public bool isClimbing = false;
     public bool isExploring = true;
 
-    //game objects used in scripts
-    public GameObject jumpPick;
-    public GameObject climbPick;
+    //mesh renderers for the different picks
+    public MeshRenderer climbingPick;
+    public MeshRenderer exploringPick;
+
+    //colliders for the picks
+    public Collider jumpingPick;
+    public Collider rotatingPick;
 
     //player controller attributes
     [Range(1f, 15f)]
@@ -62,8 +66,8 @@ public class PlayerController : Singleton<PlayerController>
     private void OnEnable()
     {
         PlayerEventBus.Subscribe(PlayerState.onDeath, OnDeath);
-        //PlayerEventBus.Subscribe(PlayerState.climbingState, SetClimb);
-        //PlayerEventBus.Subscribe(PlayerState.exploreState, SetExplore);
+        PlayerEventBus.Subscribe(PlayerState.climbingState, SetClimb);
+        PlayerEventBus.Subscribe(PlayerState.exploreState, SetExplore);
 
         GameEventBus.Subscribe(GameState.startGame, EnablePlayerController);
         GameEventBus.Subscribe(GameState.gameOver, DisablePlayerController);
@@ -72,8 +76,8 @@ public class PlayerController : Singleton<PlayerController>
     private void OnDisable()
     {
         PlayerEventBus.Unsubscribe(PlayerState.onDeath, OnDeath);
-        //PlayerEventBus.Unsubscribe(PlayerState.climbingState, SetClimb);
-        //PlayerEventBus.Unsubscribe(PlayerState.exploreState, SetExplore);
+        PlayerEventBus.Unsubscribe(PlayerState.climbingState, SetClimb);
+        PlayerEventBus.Unsubscribe(PlayerState.exploreState, SetExplore);
 
         GameEventBus.Unsubscribe(GameState.startGame, EnablePlayerController);
         GameEventBus.Unsubscribe(GameState.gameOver, DisablePlayerController);
@@ -97,16 +101,16 @@ public class PlayerController : Singleton<PlayerController>
     private void OnTriggerEnter(Collider other)
     {
         ////if the player enters the climbing trigger
-        //if(other.CompareTag("climbingChange"))
-        //{
-        //    PlayerEventBus.Publish(PlayerState.climbingState);
-        //}
+        if(other.CompareTag("climbingChange"))
+        {
+            PlayerEventBus.Publish(PlayerState.climbingState);
+        }
 
         ////if the player enters the exploring trigger
-        //if (other.CompareTag("exploreChange"))
-        //{
-        //    PlayerEventBus.Publish(PlayerState.exploreState);
-        //}
+        if (other.CompareTag("exploreChange"))
+        {
+            PlayerEventBus.Publish(PlayerState.exploreState);
+        }
 
         //if the other game object is tagged spikes
         if (other.CompareTag("Spikes"))
@@ -356,8 +360,10 @@ public class PlayerController : Singleton<PlayerController>
         isClimbing = true;
         if (isClimbing == true)
         {
-            jumpPick.SetActive(false);
-            climbPick.SetActive(true);
+            exploringPick.enabled = false;
+            climbingPick.enabled =true;
+            jumpingPick.GetComponent<Collider>().enabled = false;
+            climbingPick.GetComponent<Collider>().enabled = true;
         }
     }
 
@@ -370,8 +376,10 @@ public class PlayerController : Singleton<PlayerController>
         isClimbing = false;
         if (isExploring == true)
         {
-            jumpPick.SetActive(true);
-            climbPick.SetActive(false);
+            exploringPick.enabled = true;
+            climbingPick.enabled = false;
+            rotatingPick.GetComponent<Collider>().enabled = false;
+            jumpingPick.GetComponent<Collider>().enabled = true;
         }
     }
 }
