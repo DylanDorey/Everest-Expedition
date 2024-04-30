@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
- * Author: []
+ * Author: [Dorey, Dylan]
  * Last Updated: [03/19/2024]
  * [Stamina that the player can pickup, and heal thirst back to full]
  */
@@ -13,6 +13,7 @@ public class Stamina : Item, IItemBehavior
     /// <summary>
     /// heals the players thirst back to full
     /// </summary>
+    /// /// <param name="playerData"> the playerData script that is being affected </param>
     public void UseItem(PlayerData playerData)
     {
         //set the itemHealAmount to the amount of health the player is missing

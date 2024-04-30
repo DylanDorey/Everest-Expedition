@@ -5,13 +5,15 @@ using UnityEngine;
 /*
  * Author: [Dorey, Dylan]
  * Last Updated: [04/20/2024]
- * [singleton as a generic]
+ * [Singleton as a generic]
  */
 
 public class Singleton<T> : MonoBehaviour where T : Component
 {
+    //private static instnace of a class
     private static T _instance;
 
+    //
     public static T Instance
     {
         get

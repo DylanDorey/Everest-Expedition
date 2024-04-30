@@ -4,8 +4,8 @@ using UnityEngine;
 
 /*
  * Author: [Dorey, Dylan]
- * Last Updated: [02/04/2024]
- * [Plays the explosion particle system]
+ * Last Updated: [04/329/2024]
+ * [Plays the particle effect when the player switches states]
  */
 
 public class Explode : MonoBehaviour

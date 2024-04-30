@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /*
- * Author: []
+ * Author: [Dorey, Dylan]
  * Last Updated: [03/19/2024]
  * [Manages the players inventory]
  */
@@ -31,17 +31,18 @@ public class InventoryManager : Singleton<InventoryManager>
 
     private void Start()
     {
-        //arrays for the item game objects and the items abilities/uses
+        //initialize arrays for the item game objects and the items abilities/uses
         itemsArray = new GameObject[] { waterPrefab, medkitPrefab, staminaPrefab };
         itemAbilities = new IItemBehavior[] { waterAbility, medkitAbility, staminaAbility };
     }
 
     /// <summary>
-    /// 
+    /// Allows the player to pickup an item on the ground
     /// </summary>
     /// <param name="item"> the item that is being picked up </param>
     public void PickupItem(GameObject item)
     {
+        //for the amount of inventory slots
         for (int index = 0; index < inventorySlots.transform.childCount; index++)
         {
             //reference to inventory slot script
@@ -78,6 +79,7 @@ public class InventoryManager : Singleton<InventoryManager>
             } //if all the slots are full
             else if (inventorySlot.hasItem && index == 4)
             {
+                //set inventory full to true
                 inventoryFull = true;
 
                 //DISPLAY ERROR MESSAGE SAYING INVENTORY IS FULL
@@ -133,10 +135,10 @@ public class InventoryManager : Singleton<InventoryManager>
         //darken the inventory slot
         inventorySlots.transform.GetChild(slotIndex).GetComponent<Image>().color = Color.gray;
 
-        //wait 0.1 seconds
+        //wait 0.2 seconds
         yield return new WaitForSeconds(0.2f);
 
-        //lighten the slot back to its normal opacity
+        //lighten the slot back to its normal color
         inventorySlots.transform.GetChild(slotIndex).GetComponent<Image>().color = Color.white;
     }
 

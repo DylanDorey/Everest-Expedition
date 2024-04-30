@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Author: [Dorey, Dylan]
+ * Last Updated: [04/03/2024]
+ * [A pickaxe that allows the player to traverse by boosting themselves via mouse movement]
+ */
+
 public class TestHammer : MonoBehaviour
 {
     //the multiplier for how how the player gets boosted in the air
@@ -35,8 +41,10 @@ public class TestHammer : MonoBehaviour
         //the last mouse position detected
         lastMousePosition = Input.mousePosition;
 
+        //convert the mouse delta return value to positive in the event it returns negative
         ConvertMouseDeltaToPositive();
 
+        //make sure the hammer does not go passed a certain angle
         MaxAngle();
     }
 
@@ -53,12 +61,11 @@ public class TestHammer : MonoBehaviour
         mouse_pos.y = mouse_pos.y - pickaxePos.y;
         angle = Mathf.Atan2(mouse_pos.y, 0f) * Mathf.Rad2Deg;
 
+        //update the player's eulerAngles y value every frame
         float playerY = playerPos.eulerAngles.y;
 
         //apply degree value to picks rotation
         transform.rotation = Quaternion.Euler((-angle * 0.3f), playerY, 0f);
-        
-        //transform.parent.transform.rotation = Quaternion.Euler(0f, playerPos.rotation.y + 90f, 0f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -72,6 +79,7 @@ public class TestHammer : MonoBehaviour
             //create a force speed with mouse delta and a boost multiplier
             if (GameManager.Instance.isPlaying)
             {
+                //create a force speed based upon the mouse delta y multiplies by the boost multiplier
                 float forceSpeed = mouseDelta.y * boostMultiplier;
 
                 //add that force to the player in an upward motion

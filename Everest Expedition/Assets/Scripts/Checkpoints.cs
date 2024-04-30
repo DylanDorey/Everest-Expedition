@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Author: []
+ * Last Updated: [04/02/2024]
+ * [Grants the player an item when they reach a checkpoint]
+ */
+
 public class Checkpoints : MonoBehaviour
 {
     //the awards that the player can receive
