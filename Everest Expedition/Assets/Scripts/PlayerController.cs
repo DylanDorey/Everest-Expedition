@@ -59,11 +59,15 @@ public class PlayerController : Singleton<PlayerController>
     //particle effect prefab
     public GameObject particleEffect;
 
+    //IceMat slide Attributes
+    Rigidbody rb;
+    public float slideForce = 5f;
 
     private void Start()
     {
         //initialize spawn pos
         spawnPos = new Vector3(0f, 0f, 0f);
+        rb = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
@@ -99,6 +103,7 @@ public class PlayerController : Singleton<PlayerController>
 
             CheckIfGrounded();
         }
+        rb.AddForce(slideForce,0, 0, ForceMode.Force);
     }
 
     private void OnTriggerEnter(Collider other)

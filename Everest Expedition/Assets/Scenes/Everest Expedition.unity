@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4632,6 +4632,7 @@ MonoBehaviour:
   spawnPos: {x: 0, y: 0, z: 0}
   particleEffect: {fileID: 6140305144426342310, guid: df20e4308c3efe145be567c35ada405e,
     type: 3}
+  slideForce: 5
 --- !u!114 &906503888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4833,7 +4834,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906503884}
-  m_Material: {fileID: 13400000, guid: 548c76e8b13ef0a47ad5c38cad4c33f0, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
