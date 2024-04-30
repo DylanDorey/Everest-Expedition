@@ -17,7 +17,7 @@ public class UIManager : Singleton<UIManager>
     public float decreaseRate = 1f;
 
     //Various screen UI elements
-    public GameObject menuScreen, playingScreen, optionsScreen, controlsScreen, gameOverScreen, sensitivitySlider;
+    public GameObject menuScreen, playingScreen, optionsScreen, controlsScreen, gameOverScreen, sensitivitySlider, climbingSymbol, exploringSymbol;
 
     //health and thirst sliders
     public Slider healthSlider, thirstSlider, tempSlider;
@@ -57,6 +57,7 @@ public class UIManager : Singleton<UIManager>
         {
             //start the temperature gain
             PlayerData.Instance.TempGain();
+            ClimbingExploringSymbols();
         }
     }
 
@@ -186,6 +187,16 @@ public class UIManager : Singleton<UIManager>
             //set options open to false
             controlsOpen = false;
         }
+    }
+
+    /// <summary>
+    /// Sets the climbing symbol or exploring symbol active depending on which state the player is in
+    /// </summary>
+    public void ClimbingExploringSymbols()
+    {
+        //set the state correct symbol active
+        climbingSymbol.SetActive(PlayerController.Instance.isClimbing);
+        exploringSymbol.SetActive(PlayerController.Instance.isExploring);
     }
 
     /// <summary>

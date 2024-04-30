@@ -30,6 +30,7 @@ public class GameManager : Singleton<GameManager>
     {
         //disable players gravity
         PlayerController.Instance.gameObject.GetComponent<Rigidbody>().useGravity = false;
+        PlayerController.Instance.transform.GetChild(5).GetComponent<Rigidbody>().useGravity = false;
 
         //set has level to false on start
         hasLevel = false;
@@ -45,6 +46,7 @@ public class GameManager : Singleton<GameManager>
     {
         //enable players gravity
         PlayerController.Instance.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        PlayerController.Instance.transform.GetChild(5).GetComponent<Rigidbody>().useGravity = true;
 
         //if there is a level
         if (hasLevel)

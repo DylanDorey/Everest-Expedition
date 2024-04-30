@@ -56,6 +56,9 @@ public class PlayerController : Singleton<PlayerController>
     //raycast elements
     private Vector3 rayDirection = Vector3.down;
 
+    //particle effect prefab
+    public GameObject particleEffect;
+
 
     private void Start()
     {
@@ -364,6 +367,8 @@ public class PlayerController : Singleton<PlayerController>
             climbingPick.enabled =true;
             jumpingPick.GetComponent<Collider>().enabled = false;
             climbingPick.GetComponent<Collider>().enabled = true;
+
+            Instantiate(particleEffect, transform.position, transform.rotation);
         }
     }
 
@@ -380,6 +385,8 @@ public class PlayerController : Singleton<PlayerController>
             climbingPick.enabled = false;
             rotatingPick.GetComponent<Collider>().enabled = false;
             jumpingPick.GetComponent<Collider>().enabled = true;
+
+            Instantiate(particleEffect, transform.position, transform.rotation);
         }
     }
 }
