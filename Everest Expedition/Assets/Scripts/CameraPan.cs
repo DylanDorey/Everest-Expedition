@@ -16,6 +16,7 @@ public class CameraPan : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //checks when to start angling the camera down
         CheckToAngleCamera();
     }
 
@@ -23,6 +24,7 @@ public class CameraPan : MonoBehaviour
     {
         offset = transform.position - target.position;  
     }
+
     private void LateUpdate()
     {
         Vector3 targetPosition = target.position;
@@ -34,6 +36,7 @@ public class CameraPan : MonoBehaviour
         //transform.position = smoothPositon;
         */
         float distance = Vector3.Distance(transform.position, target.position);
+
         if (distance > maxDistance)
         {
             transform.position = target.position + (transform.position - target.position) * maxDistance;
@@ -71,6 +74,7 @@ public class CameraPan : MonoBehaviour
             transform.eulerAngles += new Vector3(0.003f, 0f, 0f);
             transform.position += new Vector3(0f, 0.0004f, 0f);
 
+            //wait one frame
             yield return null;
         }
     }

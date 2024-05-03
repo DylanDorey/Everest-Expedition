@@ -6,7 +6,7 @@ using UnityEngine.Events;
 /*
  * Author: [Dorey, Dylan]
  * Last Updated: [4/1/2024]
- * [Subscribes, Unsubsribes, and Publishes Game events based upon the players current state]
+ * [Subscribes, Unsubsribes, and Publishes Player events based upon the players current state]
  */
 
 public class PlayerEventBus : MonoBehaviour

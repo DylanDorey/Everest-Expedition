@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
  * Author: [Dorey, Dylan]
- * Last Updated: [04/329/2024]
+ * Last Updated: [04/29/2024]
  * [Plays the particle effect when the player switches states]
  */
 

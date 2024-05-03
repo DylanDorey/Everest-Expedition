@@ -28,6 +28,7 @@ public class PlayerController : Singleton<PlayerController>
     public bool hasLanded = true;
     public bool isClimbing = false;
     public bool isExploring = true;
+    public bool canRotate;
 
     //mesh renderers for the different picks
     public MeshRenderer climbingPick;
@@ -94,27 +95,34 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (GameManager.Instance.isPlaying)
         {
-            //reads the Vector2 value from the playerActions components and from the move action (AD) in our actions scriptable object
+            //reads the Vector2 value from the playerActions components and from the move action (WS) in the actions scriptable object
             Vector2 moveVec = playerInput.Player.Move.ReadValue<Vector2>();
             transform.Translate(new Vector3(0f, 0f, moveVec.y) * playerSpeed * Time.deltaTime);
 
-            Vector2 rotateVec = playerInput.Player.Rotate.ReadValue<Vector2>();
-            transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
+            //if the player can rotate/is in the exploring mode
+            if (canRotate)
+            {
+                //On rotate fires when called with A or D
+                Vector2 rotateVec = playerInput.Player.Rotate.ReadValue<Vector2>();
+                transform.Rotate(new Vector3(0f, rotateVec.x, 0f) * rotateSpeed * Time.deltaTime);
+            }
 
+            //check if the player is grounded
             CheckIfGrounded();
         }
+
         rb.AddForce(slideForce,0, 0, ForceMode.Force);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        ////if the player enters the climbing trigger
+        //if the player enters the climbing trigger
         if(other.CompareTag("climbingChange"))
         {
             PlayerEventBus.Publish(PlayerState.climbingState);
         }
 
-        ////if the player enters the exploring trigger
+        //if the player enters the exploring trigger
         if (other.CompareTag("exploreChange"))
         {
             PlayerEventBus.Publish(PlayerState.exploreState);
@@ -144,7 +152,7 @@ public class PlayerController : Singleton<PlayerController>
         //if the other game object is tagged checkpoint
         if (other.gameObject.CompareTag("Checkpoint"))
         {
-            //set the new spawnpoint for the player, turn the checpoint off, grant the reward for reaching the checkpoint, they remove the checkpoint game object
+            //set the new spawnpoint for the player, turn the checpoint off, grant the reward for reaching the checkpoint, then remove the checkpoint game object
             spawnPos = other.gameObject.transform.position;
             other.gameObject.SetActive(false);
             other.GetComponent<Checkpoints>().GrantReward();
@@ -364,8 +372,12 @@ public class PlayerController : Singleton<PlayerController>
     /// </summary>
     private void SetClimb()
     {
+        transform.eulerAngles = new Vector3(0f, 0f, 0f);
+
         isExploring = false;
         isClimbing = true;
+        canRotate = false;
+
         if (isClimbing == true)
         {
             exploringPick.enabled = false;
@@ -384,6 +396,8 @@ public class PlayerController : Singleton<PlayerController>
     {
         isExploring = true;
         isClimbing = false;
+        canRotate = true;
+
         if (isExploring == true)
         {
             exploringPick.enabled = true;

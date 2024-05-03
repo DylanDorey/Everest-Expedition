@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /*
  * Author: [Dorey, Dylan]
  * Last Updated: [03/19/2024]
- * [Store information regarding an inventories slot image and the game object in the slot]
+ * [Store information regarding an inventories slot image and the items behavior in the slot]
  */
 
 public class InventorySlot : MonoBehaviour

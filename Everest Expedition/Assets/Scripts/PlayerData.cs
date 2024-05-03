@@ -25,7 +25,7 @@ public class PlayerData : Singleton<PlayerData>
     public bool thirstEmpty = false;
     private readonly float drainTick = 3f;
 
-
+    //Damage blink values
     private bool isInvincible = false;
     private float invincibilityTimer = 0f;
     public float invincibilityDuration = 3f;
@@ -47,23 +47,30 @@ public class PlayerData : Singleton<PlayerData>
 
     void Update()
     {
+        //if the player has unlimited thirst
         if (unlimitedThirst)
         {
+            //set the player thirst to 100 and thirst empty to false
             playerThirst = 100f;
             thirstEmpty = false;
         }
 
+        //if player thirst is less than or equal to 0
         if (playerThirst <= 0)
         {
+            //set thirst empty to true
             thirstEmpty = true;
         }
         else
         {
+            //otherwise set thirst empty to false
             thirstEmpty = false;
         }
 
+        //if the player is playing the game
         if (GameManager.Instance.isPlaying)
         {
+            //if the player isInvincible
             if (isInvincible)
             {
                 invincibilityTimer += Time.deltaTime;
@@ -88,6 +95,7 @@ public class PlayerData : Singleton<PlayerData>
             }
         }
     }
+
     /// <summary>
     /// when the player starts
     /// </summary>
@@ -202,10 +210,13 @@ public class PlayerData : Singleton<PlayerData>
         //UIManager.Instance.tempSlider.value = currentTime - maxTime;
         UIManager.Instance.tempSlider.value = currentTime;
 
+        //set the current time
         currentTime += decreaseRate * Time.deltaTime;
 
+        //if the current time is greater than or equal to the max time
         if (currentTime >= maxTime)
         {
+            //publish the on death player event
             PlayerEventBus.Publish(PlayerState.onDeath);
         }
     }
@@ -229,32 +240,25 @@ public class PlayerData : Singleton<PlayerData>
     /// <param name="damage"> the incoming damage </param>
     public void TakeDamage(int damage)
     {
+        //if the player is not invincible
         if (!isInvincible)
         {
+            //subtract the incoming damage from the player's health
             playerHealth -= damage;
 
+            //if the players health is less than or equal to 0
             if (playerHealth <= 0)
             {
+                //publish the on death player event
                 PlayerEventBus.Publish(PlayerState.onDeath);
             }
             else
             {
+                //otherwise set isInvincible to true and set the invincibility timer to 0
                 isInvincible = true;
                 invincibilityTimer = 0f;
             }
         }
     }
 
-    //private void OnGUI()
-    //{
-    //    if(GUILayout.Button("Damage Health"))
-    //    {
-    //        playerHealth -= 20;
-    //    }
-
-    //    if (GUILayout.Button("Damage Thirst"))
-    //    {
-    //        playerThirst -= 20;
-    //    }
-    //}
 }
