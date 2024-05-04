@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
  * Author: [Dorey, Dylan]
@@ -29,11 +30,39 @@ public class TestHammer : MonoBehaviour
     public Transform playerPos;
     public Rigidbody playerRB;
 
+    //Every layer of the jump power meter
+    public GameObject powerLvl1;
+    public GameObject powerLvl2;
+    public GameObject powerLvl3;
+    public GameObject powerLvl4;
+    public GameObject powerLvl5;
+    public GameObject powerLvl6;
+    public GameObject powerLvl7;
+    public GameObject powerLvl8;
+    public GameObject powerLvl9;
+    public GameObject powerLvl10;
+    public GameObject powerLvl11;
+    public GameObject powerLvl12;
+
 
     private void Start()
     {
         //initialize the mouse position
         lastMousePosition = Input.mousePosition;
+
+        //set all power meter images to active = false
+        powerLvl1.GetComponent<Image>().enabled = false;
+        powerLvl2.GetComponent<Image>().enabled = false;
+        powerLvl3.GetComponent<Image>().enabled = false;
+        powerLvl4.GetComponent<Image>().enabled = false;
+        powerLvl5.GetComponent<Image>().enabled = false;
+        powerLvl6.GetComponent<Image>().enabled = false;
+        powerLvl7.GetComponent<Image>().enabled = false;
+        powerLvl8.GetComponent<Image>().enabled = false;
+        powerLvl9.GetComponent<Image>().enabled = false;
+        powerLvl10.GetComponent<Image>().enabled = false;
+        powerLvl11.GetComponent<Image>().enabled = false;
+        powerLvl12.GetComponent<Image>().enabled = false;
     }
 
     private void Update()
@@ -84,6 +113,67 @@ public class TestHammer : MonoBehaviour
 
                 //add that force to the player in an upward motion
                 playerRB.AddForce(Vector3.up * -forceSpeed);
+
+                //gets the jump height and shows it on the power meter
+                if(-forceSpeed > 100f)
+                {
+                    powerLvl1.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 300f)
+                {
+                    powerLvl2.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 500f)
+                {
+                    powerLvl3.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 700f)
+                {
+                    powerLvl4.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 900f)
+                {
+                    powerLvl5.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 1100f)
+                {
+                    powerLvl6.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 1300f)
+                {
+                    powerLvl7.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 1500f)
+                {
+                    powerLvl8.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 1600f)
+                {
+                    powerLvl9.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 1700f)
+                {
+                    powerLvl10.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 1800f)
+                {
+                    powerLvl11.GetComponent<Image>().enabled = true;
+                }
+
+                if (-forceSpeed > 2000f)
+                {
+                    powerLvl12.GetComponent<Image>().enabled = true;
+                }
             }
         }
     }
@@ -118,4 +208,6 @@ public class TestHammer : MonoBehaviour
             transform.rotation = Quaternion.Euler(100f, transform.parent.transform.position.y, 0f);
         }
     }
+
+
 }

@@ -38,6 +38,20 @@ public class PlayerController : Singleton<PlayerController>
     public Collider jumpingPick;
     public Collider rotatingPick;
 
+    //all power meter bars to reset when grounded
+    public GameObject pwrLvl1;
+    public GameObject pwrLvl2;
+    public GameObject pwrLvl3;
+    public GameObject pwrLvl4;
+    public GameObject pwrLvl5;
+    public GameObject pwrLvl6;
+    public GameObject pwrLvl7;
+    public GameObject pwrLvl8;
+    public GameObject pwrLvl9;
+    public GameObject pwrLvl10;
+    public GameObject pwrLvl11;
+    public GameObject pwrLvl12;
+
     //player controller attributes
     [Range(1f, 15f)]
     public float playerSpeed = 8f;
@@ -165,6 +179,25 @@ public class PlayerController : Singleton<PlayerController>
             //set isPlaying to false and publish game over
             GameManager.Instance.isPlaying = false;
             GameEventBus.Publish(GameState.gameOver);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            pwrLvl1.GetComponent<Image>().enabled = false;
+            pwrLvl2.GetComponent<Image>().enabled = false;
+            pwrLvl3.GetComponent<Image>().enabled = false;
+            pwrLvl4.GetComponent<Image>().enabled = false;
+            pwrLvl5.GetComponent<Image>().enabled = false;
+            pwrLvl6.GetComponent<Image>().enabled = false;
+            pwrLvl7.GetComponent<Image>().enabled = false;
+            pwrLvl8.GetComponent<Image>().enabled = false;
+            pwrLvl9.GetComponent<Image>().enabled = false;
+            pwrLvl10.GetComponent<Image>().enabled = false;
+            pwrLvl11.GetComponent<Image>().enabled = false;
+            pwrLvl12.GetComponent<Image>().enabled = false;
         }
     }
     /// <summary>
