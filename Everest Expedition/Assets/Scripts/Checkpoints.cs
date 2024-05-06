@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
- * Author: []
+ * Author: [Diaz,Jr Ismael ]
  * Last Updated: [04/02/2024]
  * [Grants the player an item when they reach a checkpoint]
  */

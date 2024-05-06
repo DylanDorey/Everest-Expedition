@@ -78,7 +78,6 @@ public class PlayerController : Singleton<PlayerController>
     //particle effect prefab
     public GameObject particleEffect;
 
-
     private void Start()
     {
         //initialize spawn pos
