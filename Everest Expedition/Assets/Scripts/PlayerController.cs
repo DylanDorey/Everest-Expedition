@@ -30,6 +30,9 @@ public class PlayerController : Singleton<PlayerController>
     public bool isExploring = true;
     public bool canRotate;
 
+    //game object for climbing pickaxe
+    public GameObject pickaxe;
+
     //mesh renderers for the different picks
     public MeshRenderer climbingPick;
     public MeshRenderer exploringPick;
@@ -410,10 +413,11 @@ public class PlayerController : Singleton<PlayerController>
         {
             exploringPick.enabled = false;
             climbingPick.enabled =true;
+            
             jumpingPick.GetComponent<Collider>().enabled = false;
             rotatingPickEnd.enabled = true;
             rotatingPickBase.enabled = true;
-
+            pickaxe.transform.rotation = Quaternion.Euler(0, 0, -90);
             Instantiate(particleEffect, transform.position, transform.rotation);
         }
     }

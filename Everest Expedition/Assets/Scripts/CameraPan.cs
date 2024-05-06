@@ -57,8 +57,12 @@ public class CameraPan : MonoBehaviour
         //if the player is not grounded
         if (PlayerController.Instance.isGrounded == false)
         {
-            //start moving the camera in an upwards orientation
-            StartCoroutine(OnBoostCameraAngle());
+            //only activates in explore mode
+            if(PlayerController.Instance.isExploring == true)
+            {
+                //start moving the camera in an upwards orientation
+                StartCoroutine(OnBoostCameraAngle());
+            }
         }
     }
 
