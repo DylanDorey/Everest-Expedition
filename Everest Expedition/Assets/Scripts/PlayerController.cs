@@ -36,7 +36,8 @@ public class PlayerController : Singleton<PlayerController>
 
     //colliders for the picks
     public Collider jumpingPick;
-    public Collider rotatingPick;
+    public Collider rotatingPickEnd;
+    public Collider rotatingPickBase;
 
     //all power meter bars to reset when grounded
     public GameObject pwrLvl1;
@@ -410,7 +411,8 @@ public class PlayerController : Singleton<PlayerController>
             exploringPick.enabled = false;
             climbingPick.enabled =true;
             jumpingPick.GetComponent<Collider>().enabled = false;
-            climbingPick.GetComponent<Collider>().enabled = true;
+            rotatingPickEnd.enabled = true;
+            rotatingPickBase.enabled = true;
 
             Instantiate(particleEffect, transform.position, transform.rotation);
         }
@@ -429,7 +431,8 @@ public class PlayerController : Singleton<PlayerController>
         {
             exploringPick.enabled = true;
             climbingPick.enabled = false;
-            rotatingPick.GetComponent<Collider>().enabled = false;
+            rotatingPickEnd.enabled = false;
+            rotatingPickBase.enabled = false;
             jumpingPick.GetComponent<Collider>().enabled = true;
 
             Instantiate(particleEffect, transform.position, transform.rotation);
