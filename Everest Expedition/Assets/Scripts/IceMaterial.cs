@@ -28,10 +28,6 @@ public class IceMaterial : MonoBehaviour
         {
             // Start sliding immediately upon contact
             isSliding = true;
-            // Calculate the slide direction based on the player's movement
-            slideDirection = other.GetComponent<Rigidbody>().velocity.normalized;
-            // Apply the sliding force immediately
-            rb.AddForce(slideDirection * slideForce, ForceMode.Force);
         }
     }
 
