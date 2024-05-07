@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class IceMaterial : MonoBehaviour
 {
-    Rigidbody rb;
-    bool isSliding;
-    Vector3 slideDirection;
-    public float slideForce = 5f;
+    public Rigidbody rb;
+    private bool isSliding;
+    public Vector3 slideDirection;
+    private float slideForce = 8f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        int randomDirectionIndex = Random.Range(0, 2);
+
+        switch(randomDirectionIndex)
+        {
+            case 0:
+                slideDirection = Vector3.left;
+                break;
+            case 1:
+                slideDirection = Vector3.right;
+                break;
+        }
     }
 
     void FixedUpdate()
@@ -26,6 +38,8 @@ public class IceMaterial : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            rb = other.GetComponent<Rigidbody>();
+           
             // Start sliding immediately upon contact
             isSliding = true;
         }

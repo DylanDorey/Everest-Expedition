@@ -39,11 +39,12 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         //initialize tasks
-        tasks = new string[] { "Welcome to Everest Expedition System Prototype. Walk by using W and S to start the tutorial.", "Look left and right by using A and D", "Change your sensitivity by pressing ENTER", "View controls by pressing TAB", "Walk forward to those spikes", "Grab that medkit there to heal yourself",
-            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit now", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint! You will be rewarded with a random item when reaching checkpoints", "Thank you for playtesting our System Prototype! Grab the Flag!" };
+        tasks = new string[] { "Welcome to Everest Expedition!. Walk by using W and S to start the tutorial.", "Look left and right by using A and D", "Change your sensitivity by pressing ENTER", "View controls by pressing TAB", "Walk forward to those spikes", "Grab that medkit there to heal yourself",
+            "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit now", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint! You will be rewarded with a random item when reaching checkpoints", "Beware, icy surfaces will make you slide off of platforms", 
+            "You've switched to the climbing state and cannot turn. Climb by moving your mouse left and right.", "WINNER! Grab the Flag!" };
 
         //initialize objectives
-        objectives = new string[] { "Walk forward using W, and backwards using S", "Look left and right using A and D", "Press ENTER to open options menu", "Press TAB to view Control Scheme", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the platform", "Don' fall off", "Please fill out the Google Form" };
+        objectives = new string[] { "Walk forward using W and backwards using S", "Look left and right using A and D", "Press ENTER to open options menu", "Press TAB to view Control Scheme", "Walk into the spikes", "Grab the medkit", "Use the medkit by pressing 1", "Boost yourself up in the air to the platform", "Don' fall off", "Avoid the icy surface", "Climb up the platforms", "Pick up the flag to claim victory!"};
     }
 
     private void Update()

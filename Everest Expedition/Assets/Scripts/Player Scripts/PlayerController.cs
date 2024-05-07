@@ -28,7 +28,7 @@ public class PlayerController : Singleton<PlayerController>
     public bool hasLanded = true;
     public bool isClimbing = false;
     public bool isExploring = true;
-    public bool canRotate;
+    public bool canRotate = true;
 
     //game object for climbing pickaxe
     public GameObject pickaxe;
