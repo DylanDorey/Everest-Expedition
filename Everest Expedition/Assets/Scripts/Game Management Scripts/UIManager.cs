@@ -39,7 +39,7 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         //initialize tasks
-        tasks = new string[] { "Welcome to Everest Expedition!. Walk by using W and S to start the tutorial.", "Look left and right by using A and D", "Change your sensitivity by pressing ENTER", "View controls by pressing TAB", "Walk forward to those spikes", "Grab that medkit there to heal yourself",
+        tasks = new string[] { "Welcome to Everest Expedition! Walk by using W and S to start the tutorial.", "Look left and right by using A and D", "Change your sensitivity by pressing ENTER", "View controls by pressing TAB", "Walk forward to those spikes", "Grab that medkit there to heal yourself",
             "Select numbers 1-5 to use items in your inventory. Press 1 to use that medkit now", "Boost yourself up by dragging the mouse downward at different speeds for different heights", "You have reached a checkpoint! You will be rewarded with a random item when reaching checkpoints", "Beware, icy surfaces will make you slide off of platforms", 
             "You've switched to the climbing state and cannot turn. Climb by moving your mouse left and right.", "WINNER! Grab the Flag!" };
 
