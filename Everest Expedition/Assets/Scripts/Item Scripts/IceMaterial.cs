@@ -7,7 +7,7 @@ public class IceMaterial : MonoBehaviour
     public Rigidbody rb;
     private bool isSliding;
     public Vector3 slideDirection;
-    private float slideForce = 8f;
+    private float slideForce = 20f;
 
     void Start()
     {
@@ -34,20 +34,20 @@ public class IceMaterial : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            rb = other.GetComponent<Rigidbody>();
-           
+            rb = collision.transform.GetComponent<Rigidbody>();
+
             // Start sliding immediately upon contact
             isSliding = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             isSliding = false;
         }
